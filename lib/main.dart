@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/router/app_router.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+  final router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: router.config(),
+      theme: defaultTheme,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
