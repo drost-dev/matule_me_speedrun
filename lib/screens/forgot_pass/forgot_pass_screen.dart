@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/router/app_router.dart';
 import 'package:matule_me_speedrun/widgets/input_field.dart';
 
 @RoutePage()
@@ -99,6 +100,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
+                        Future.delayed(const Duration(seconds: 3), () {
+                          if (context.mounted) context.router.maybePop();
+                        });
+
                         return Dialog(
                           insetPadding: EdgeInsets.zero,
                           child: Container(
@@ -158,7 +163,9 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                           ),
                         );
                       },
-                    );
+                    ).whenComplete(() {
+                      context.router.push(const SignInRoute());
+                    });
                   }
                 },
                 style: TextButton.styleFrom(
