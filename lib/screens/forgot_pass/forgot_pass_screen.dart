@@ -96,7 +96,69 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
               child: TextButton(
                 onPressed: () {
                   if ((_emailKey.currentState?.validate() ?? false)) {
-                    print('чиназес');
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          insetPadding: EdgeInsets.zero,
+                          child: Container(
+                            width: 335,
+                            height: 196,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 30,
+                            ),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.onSurface,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: theme.colorScheme.blue,
+                                  radius: 22,
+                                  child: const ImageIcon(
+                                    AssetImage('icons/mail.png'),
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Container(
+                                  constraints:
+                                      const BoxConstraints(minHeight: 68),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Проверьте Ваш Email',
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          height: 20 / 16,
+                                          letterSpacing: 0,
+                                          color: theme
+                                              .colorScheme.onSurfaceVariant,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Мы Отправили Код Восстановления Пароля На Вашу Электронную Почту.',
+                                        style: theme.textTheme.titleLarge
+                                            ?.copyWith(height: 24 / 16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   }
                 },
                 style: TextButton.styleFrom(

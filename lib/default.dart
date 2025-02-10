@@ -7,14 +7,15 @@ const _darkGrey = Color.fromRGBO(106, 106, 106, 1);
 const _blue = Color.fromRGBO(72, 178, 231, 1);
 
 final defaultTheme = ThemeData(
-  textTheme: const TextTheme(
-    displayMedium: TextStyle(
+  textTheme: TextTheme(
+    displayMedium: const TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.bold,
       letterSpacing: 0,
       color: Colors.black,
     ),
     titleLarge: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 16,
       fontWeight: FontWeight.w400,
       height: 24/16,
@@ -22,6 +23,7 @@ final defaultTheme = ThemeData(
       letterSpacing: 0,
     ),
     titleMedium: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 14,
       fontWeight: FontWeight.w500,
       height: 16/14,
@@ -31,6 +33,7 @@ final defaultTheme = ThemeData(
 
 
     labelLarge: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 12,
       fontWeight: FontWeight.normal,
       height: 16/12,
