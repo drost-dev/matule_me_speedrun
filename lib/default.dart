@@ -7,7 +7,7 @@ const _darkGrey = Color.fromRGBO(106, 106, 106, 1);
 const _blue = Color.fromRGBO(72, 178, 231, 1);
 
 final defaultTheme = ThemeData(
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     displayMedium: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.bold,

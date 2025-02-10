@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputField extends StatefulWidget {
   const InputField({
     super.key,
-    required this.title,
+    this.title,
     required this.hintText,
     this.obsecureText,
+    required this.onChanged,
+    this.validator,
+    this.formKey,
   });
 
-  final String title;
+  final String? title;
   final String hintText;
   final bool? obsecureText;
+  final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  final GlobalKey<FormFieldState>? formKey;
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -23,26 +30,33 @@ class _InputFieldState extends State<InputField> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      constraints: const BoxConstraints(minHeight: 90),
+      constraints: BoxConstraints(minHeight: widget.title != null ? 80 : 48),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            widget.title,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w500,
-              color: theme.colorScheme.onSurfaceVariant,
-              height: 20 / 16,
+          if (widget.title != null)
+            Text(
+              widget.title!,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+                color: theme.colorScheme.onSurfaceVariant,
+                height: 20 / 16,
+              ),
             ),
-          ),
           SizedBox(
             height: 48,
             width: double.infinity,
             child: TextFormField(
+              key: widget.formKey,
               style: theme.textTheme.titleMedium,
+              onChanged: widget.onChanged,
               obscureText: _obscureText,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9.@]")),
+              ],
+              validator: widget.validator,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: theme.textTheme.titleMedium,
