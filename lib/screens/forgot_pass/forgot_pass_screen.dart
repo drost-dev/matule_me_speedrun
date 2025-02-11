@@ -23,24 +23,21 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
       backgroundColor: theme.colorScheme.onSurface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110),
-        child: GestureDetector(
-          onTap: () {
-            context.router.maybePop();
-          },
-          child: SizedBox.expand(
-            child: Container(
-              padding: const EdgeInsets.only(top: 66, left: 20),
-              alignment: Alignment.bottomLeft,
-              child: SizedBox.square(
-                dimension: 44,
-                child: IconButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    backgroundColor: theme.colorScheme.surface,
-                  ),
-                  icon: const ImageIcon(
-                    AssetImage('icons/arrow_left.png'),
-                  ),
+        child: SizedBox.expand(
+          child: Container(
+            padding: const EdgeInsets.only(top: 66, left: 20),
+            alignment: Alignment.bottomLeft,
+            child: SizedBox.square(
+              dimension: 44,
+              child: IconButton(
+                onPressed: () {
+                  context.router.maybePop();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: theme.colorScheme.surface,
+                ),
+                icon: const ImageIcon(
+                  AssetImage('icons/arrow_left.png'),
                 ),
               ),
             ),
@@ -101,7 +98,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       context: context,
                       builder: (context) {
                         Future.delayed(const Duration(seconds: 3), () {
-                          if (context.mounted) context.router.maybePop();
+                          if (context.mounted) context.router.push(const OtpVerificationRoute());
                         });
 
                         return Dialog(
@@ -164,7 +161,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         );
                       },
                     ).whenComplete(() {
-                      context.router.push(const SignInRoute());
+                      context.router.push(const OtpVerificationRoute());
                     });
                   }
                 },

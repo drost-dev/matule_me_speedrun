@@ -29,6 +29,25 @@ class ForgotPassRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OtpVerificationScreen]
+class OtpVerificationRoute extends PageRouteInfo<void> {
+  const OtpVerificationRoute({List<PageRouteInfo>? children})
+      : super(
+          OtpVerificationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OtpVerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const OtpVerificationScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SignInScreen]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute({List<PageRouteInfo>? children})
