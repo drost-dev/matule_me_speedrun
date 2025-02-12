@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:matule_me_speedrun/widgets/product_card_small.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -7,6 +8,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
+      body: const Center(
+        child: ProductCardSmall(),
+      ),
+    );
   }
 }
