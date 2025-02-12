@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:matule_me_speedrun/screens/forgot_pass/forgot_pass_screen.dart';
+import 'package:matule_me_speedrun/screens/home/home_screen.dart';
 import 'package:matule_me_speedrun/screens/otp_verification/otp_verification_screen.dart';
 import 'package:matule_me_speedrun/screens/sign_in/sign_in_screen.dart';
 import 'package:matule_me_speedrun/screens/sign_up/sign_up_screen.dart';
@@ -13,5 +14,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SignUpRoute.page, path: '/signup'),
         AutoRoute(page: ForgotPassRoute.page, path: '/forgot'),
         AutoRoute(page: OtpVerificationRoute.page, path: '/otp'),
+
+        AutoRoute(page: HomeRoute.page, path: '/home'),
       ];
 }
