@@ -17,6 +17,10 @@ class SupabaseRepo {
     return repo;
   }
 
+  bool isSignedIn() {
+    return _client.auth.currentUser != null;
+  }
+
   Future<void> signIn({required String email, required String password}) async {
     await _client.auth.signInWithPassword(password: password, email: email);
   }

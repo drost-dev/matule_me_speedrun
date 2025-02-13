@@ -67,6 +67,25 @@ class OtpVerificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RootScreen]
+class RootRoute extends PageRouteInfo<void> {
+  const RootRoute({List<PageRouteInfo>? children})
+      : super(
+          RootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RootRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RootScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SignInScreen]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute({List<PageRouteInfo>? children})

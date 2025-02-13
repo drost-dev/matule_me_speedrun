@@ -10,13 +10,16 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     SupabaseRepo sbRepo = GetIt.I<SupabaseRepo>();
-    print('init bloc');
 
     on<AuthEvent>((event, emit) async {
       emit(AuthProcessing());
       switch (event) {
         case AuthLoad():
-          emit(AuthLoaded());
+          if (sbRepo.isSignedIn()) {
+            emit(AuthSuccess());
+          } else {
+            emit(AuthLoaded());
+          }
           break;
         case AuthSignIn():
           try {

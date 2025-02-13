@@ -22,6 +22,12 @@ final defaultTheme = ThemeData(
       letterSpacing: 0,
       color: Colors.black,
     ),
+    headlineSmall: const TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      letterSpacing: 0,
+      color: Colors.black,
+    ),
     titleLarge: TextStyle(
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 16,
@@ -60,7 +66,7 @@ final defaultTheme = ThemeData(
     labelSmall: const TextStyle(
       fontSize: 12,
       letterSpacing: 0,
-      color: const Color.fromRGBO(125, 132, 141, 1),
+      color: Color.fromRGBO(125, 132, 141, 1),
     ),
   ),
   fontFamily: GoogleFonts.raleway().fontFamily,
