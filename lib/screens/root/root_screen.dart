@@ -64,7 +64,9 @@ class _RootScreenState extends State<RootScreen> {
                           ],
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.router.push(const CartRoute());
+                          },
                           icon: ImageIcon(
                             const AssetImage('icons/cart.png'),
                             size: 24,

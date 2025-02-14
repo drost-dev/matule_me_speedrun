@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/router/app_router.dart';
 
 class CartButton extends StatelessWidget {
   const CartButton({super.key, this.hasItems = false});
@@ -14,7 +16,9 @@ class CartButton extends StatelessWidget {
       child: Stack(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.router.push(const CartRoute());
+            },
             icon: ImageIcon(
               const AssetImage('icons/cart.png'),
               size: 24,

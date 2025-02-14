@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:matule_me_speedrun/screens/cart/cart_screen.dart';
 import 'package:matule_me_speedrun/screens/category/category_screen.dart';
 import 'package:matule_me_speedrun/screens/favourite/favourite_screen.dart';
 import 'package:matule_me_speedrun/screens/forgot_pass/forgot_pass_screen.dart';
@@ -32,5 +33,6 @@ class AppRouter extends RootStackRouter {
 
         AutoRoute(page: PopularRoute.page, path: '/popular'),
         AutoRoute(page: CategoryRoute.page, path: '/category'),
+        AutoRoute(page: CartRoute.page, path: '/cart'),
       ];
 }
