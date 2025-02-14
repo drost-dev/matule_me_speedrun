@@ -9,6 +9,8 @@ class ProductCardSmall extends StatefulWidget {
 }
 
 class _ProductCardSmallState extends State<ProductCardSmall> {
+  bool isAdded = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -96,7 +98,9 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () {
-                  //add/remove cart
+                  setState(() {
+                    isAdded = !isAdded;
+                  });
                 },
                 child: Container(
                   width: 34,
@@ -108,15 +112,23 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                     color: theme.colorScheme.blue,
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    '+',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w300,
-                      color: theme.colorScheme.onSurface,
-                      height: 16/32,
-                    ),
-                  ),
+                  child: isAdded
+                      ? Padding(
+                          padding: const EdgeInsets.all(7),
+                          child: ImageIcon(
+                            const AssetImage('icons/cart2.png'),
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        )
+                      : Text(
+                          '+',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w300,
+                            color: theme.colorScheme.onSurface,
+                            height: 16 / 32,
+                          ),
+                        ),
                 ),
               ),
             ),

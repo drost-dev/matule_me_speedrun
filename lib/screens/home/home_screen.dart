@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/router/app_router.dart';
 import 'package:matule_me_speedrun/widgets/cart_button.dart';
 import 'package:matule_me_speedrun/widgets/product_card_small.dart';
 
@@ -124,18 +125,23 @@ class HomeScreen extends StatelessWidget {
                       clipBehavior: Clip.none,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Container(
-                          width: 108,
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.onSurface,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            categories[index],
-                            style: theme.textTheme.labelLarge?.copyWith(
-                              height: null,
-                              color: theme.colorScheme.onSurfaceVariant,
+                        return GestureDetector(
+                          onTap: () {
+                            context.router.push(CategoryRoute(category: categories[index]));
+                          },
+                          child: Container(
+                            width: 108,
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.onSurface,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              categories[index],
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                height: null,
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
                         );
@@ -166,11 +172,16 @@ class HomeScreen extends StatelessWidget {
                           height: 24 / 16,
                         ),
                       ),
-                      Text(
-                        'Все',
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.blue,
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(const PopularRoute());
+                        },
+                        child: Text(
+                          'Все',
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: theme.colorScheme.blue,
+                          ),
                         ),
                       ),
                     ],

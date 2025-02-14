@@ -10,6 +10,71 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CategoryScreen]
+class CategoryRoute extends PageRouteInfo<CategoryRouteArgs> {
+  CategoryRoute({
+    Key? key,
+    required String category,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CategoryRoute.name,
+          args: CategoryRouteArgs(
+            key: key,
+            category: category,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CategoryRouteArgs>();
+      return CategoryScreen(
+        key: args.key,
+        category: args.category,
+      );
+    },
+  );
+}
+
+class CategoryRouteArgs {
+  const CategoryRouteArgs({
+    this.key,
+    required this.category,
+  });
+
+  final Key? key;
+
+  final String category;
+
+  @override
+  String toString() {
+    return 'CategoryRouteArgs{key: $key, category: $category}';
+  }
+}
+
+/// generated route for
+/// [FavouriteScreen]
+class FavouriteRoute extends PageRouteInfo<void> {
+  const FavouriteRoute({List<PageRouteInfo>? children})
+      : super(
+          FavouriteRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FavouriteRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FavouriteScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPassScreen]
 class ForgotPassRoute extends PageRouteInfo<void> {
   const ForgotPassRoute({List<PageRouteInfo>? children})
@@ -62,6 +127,25 @@ class OtpVerificationRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const OtpVerificationScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [PopularScreen]
+class PopularRoute extends PageRouteInfo<void> {
+  const PopularRoute({List<PageRouteInfo>? children})
+      : super(
+          PopularRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PopularRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PopularScreen();
     },
   );
 }

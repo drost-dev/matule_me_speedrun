@@ -16,6 +16,7 @@ class _RootScreenState extends State<RootScreen> {
 
   final routes = const [
     HomeRoute(),
+    FavouriteRoute(),
   ];
 
   @override
@@ -24,9 +25,18 @@ class _RootScreenState extends State<RootScreen> {
 
     return AutoTabsRouter(
       routes: routes,
+      homeIndex: 0,
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
+
+        tabsRouter.addListener(() {
+          setState(() {
+            selectedIndex = tabsRouter.activeIndex;
+          });
+        });
+
         return Scaffold(
+          extendBody: true,
           body: child,
           bottomNavigationBar: PreferredSize(
             preferredSize: const Size.fromHeight(106),
