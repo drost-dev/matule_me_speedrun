@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/models/product.dart';
+import 'package:matule_me_speedrun/widgets/cart_product.dart';
 
 @RoutePage()
 class CartScreen extends StatefulWidget {
@@ -77,7 +78,9 @@ class _CartScreenState extends State<CartScreen> {
           child: Column(
             children: [
               ListView.separated(
-                itemBuilder: (context, index) {},
+                itemBuilder: (context, index) {
+                  return const CartProduct();
+                },
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 14);
                 },
