@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:matule_me_speedrun/bloc/auth/auth_bloc.dart';
+import 'package:matule_me_speedrun/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:matule_me_speedrun/default.dart';
-import 'package:matule_me_speedrun/repos/supabase/supabase_repo.dart';
-import 'package:matule_me_speedrun/router/app_router.dart';
+import 'package:matule_me_speedrun/features/database/data/repos/supabase/supabase_repo.dart';
+import 'package:matule_me_speedrun/features/router/presentation/app_router.dart';
 
 void main() async {
   SupabaseRepo sbRepo = await SupabaseRepo.init();
