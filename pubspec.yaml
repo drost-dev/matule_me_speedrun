@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
+  flutter_native_splash: ^2.4.4
   flutter_otp_text_field: ^1.4.0+2
   get_it: ^8.0.3
   google_fonts: ^6.2.1
@@ -29,3 +30,7 @@ flutter:
 
   assets:
     - assets/
+
+flutter_native_splash:
+  color: "#48B2E7"
+  image: "assets/icons/splash.png"

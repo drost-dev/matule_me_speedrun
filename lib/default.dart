@@ -8,6 +8,8 @@ const _blue = Color.fromRGBO(72, 178, 231, 1);
 
 const _red = Color.fromRGBO(248, 114, 101, 1);
 
+const _disabled = Color.fromRGBO(43, 107, 139, 1);
+
 final defaultTheme = ThemeData(
   textTheme: TextTheme(
     displayMedium: const TextStyle(
@@ -77,6 +79,7 @@ final defaultTheme = ThemeData(
     onSurface: Colors.white,
     onSurfaceVariant: Colors.black,
   ),
+  disabledColor: _disabled,
 );
 
 extension CustomColors on ColorScheme {

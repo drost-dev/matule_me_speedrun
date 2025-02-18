@@ -132,6 +132,41 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OnboardScreen]
+class OnboardRoute extends PageRouteInfo<OnboardRouteArgs> {
+  OnboardRoute({
+    dynamic key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OnboardRoute.name,
+          args: OnboardRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'OnboardRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<OnboardRouteArgs>(orElse: () => const OnboardRouteArgs());
+      return OnboardScreen(key: args.key);
+    },
+  );
+}
+
+class OnboardRouteArgs {
+  const OnboardRouteArgs({this.key});
+
+  final dynamic key;
+
+  @override
+  String toString() {
+    return 'OnboardRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [OtpVerificationScreen]
 class OtpVerificationRoute extends PageRouteInfo<void> {
   const OtpVerificationRoute({List<PageRouteInfo>? children})

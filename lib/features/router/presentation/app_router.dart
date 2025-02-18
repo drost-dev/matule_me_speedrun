@@ -10,12 +10,14 @@ import 'package:matule_me_speedrun/features/home/presentation/popular_screen.dar
 import 'package:matule_me_speedrun/features/home/presentation/root/root_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/sign_in_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/sign_up_screen.dart';
+import 'package:matule_me_speedrun/features/onboard/presentation/onboard_screen.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(page: OnboardRoute.page, path: '/onboard', initial: true),
         
         AutoRoute(page: SignUpRoute.page, path: '/signup'),
         AutoRoute(page: ForgotPassRoute.page, path: '/forgot'),
@@ -28,7 +30,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: SignInRoute.page, path: 'signin'),
             AutoRoute(page: FavouriteRoute.page, path: 'favourite'),
           ],
-          initial: true,
+          // initial: true,
         ),
 
         AutoRoute(page: PopularRoute.page, path: '/popular'),
