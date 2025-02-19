@@ -16,6 +16,8 @@ class _CartProductState extends State<CartProduct> {
 
   bool isAnimating = false;
 
+  int amount = 1;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -63,7 +65,7 @@ class _CartProductState extends State<CartProduct> {
       child: Row(
         children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 100),
             onEnd: () {
               setState(() {
                 isAnimating = false;
@@ -75,19 +77,45 @@ class _CartProductState extends State<CartProduct> {
               borderRadius: BorderRadius.circular(8),
               color: theme.colorScheme.blue,
             ),
+            padding: const EdgeInsets.symmetric(vertical: 14),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ImageIcon(
-                  const AssetImage('icons/plus.png'),
-                  size: 14,
-                  color: theme.colorScheme.onSurface,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      amount++;
+                    });
+                  },
+                  child: ImageIcon(
+                    const AssetImage('icons/plus.png'),
+                    size: 14,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                Text(amount.toString()),
+                GestureDetector(
+                  onTap: () {
+                    if (amount > 1) {
+                      setState(() {
+                        amount--;
+                      });
+                    }
+                  },
+                  child: SizedBox(
+                    height: 2,
+                    child: ImageIcon(
+                      const AssetImage('icons/minus.png'),
+                      color: theme.colorScheme.onSurface,
+                      size: 14,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 100),
             onEnd: () {
               setState(() {
                 isAnimating = false;
@@ -103,7 +131,7 @@ class _CartProductState extends State<CartProduct> {
             ),
           ),
           AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 100),
             onEnd: () {
               setState(() {
                 isAnimating = false;
