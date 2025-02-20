@@ -1,4 +1,6 @@
 import 'package:matule_me_speedrun/features/database/domain/repos/database_repo.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseRepo extends DatabaseRepo {
@@ -46,5 +48,34 @@ class SupabaseRepo extends DatabaseRepo {
   Future<void> verifyOtp({required String email, required String code}) async {
     await _client.auth
         .verifyOTP(email: email, token: code, type: OtpType.email);
+  }
+
+  @override
+  Future<List<Product>> getAllProducts() async {
+    var response = await _client
+        .from('product')
+        .select('*, category(*)')
+        .eq('available', true);
+
+    List<Product> products = [];
+
+    for (int i = 0; i < response.length; i++) {
+      products.add(Product.fromJson(response[i]));
+    }
+
+    return products;
+  }
+
+  @override
+  Future<List<Category>> getAllCategories() async {
+    var response = await _client.from('category').select('*');
+
+    List<Category> categories = [];
+
+    for (int i = 0; i < response.length; i++) {
+      categories.add(Category.fromJson(response[i]));
+    }
+
+    return categories;
   }
 }

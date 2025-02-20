@@ -122,7 +122,9 @@ class _CartProductState extends State<CartProduct> {
               });
             },
             margin: EdgeInsets.only(
-                right: showDelete ? 10 : 0, left: showAmount ? 10 : 0),
+              right: showDelete ? 10 : 0,
+              left: showAmount ? 10 : 0,
+            ),
             width: (showAmount || showDelete) ? 267 : 335,
             height: 104,
             decoration: BoxDecoration(

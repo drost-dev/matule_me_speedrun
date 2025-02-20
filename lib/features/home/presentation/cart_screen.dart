@@ -12,27 +12,27 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final products = const [
+  final products = [
     Product(
       id: '1',
       name: 'Nike Club Max',
-      description: '',
+      desc: '',
       price: 584.95,
-      imagePath: 'images/cart_product1.png',
+      imageUrl: 'images/cart_product1.png',
     ),
     Product(
       id: '2',
       name: 'Nike Air Max 200',
-      description: '',
+      desc: '',
       price: 94.05,
-      imagePath: 'images/cart_product1.png',
+      imageUrl: 'images/cart_product1.png',
     ),
     Product(
       id: '3',
       name: 'Nike Air Max 270 Essential',
-      description: '',
+      desc: '',
       price: 74.95,
-      imagePath: 'images/cart_product1.png',
+      imageUrl: 'images/cart_product1.png',
     ),
   ];
 

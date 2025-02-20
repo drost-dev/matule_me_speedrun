@@ -1,20 +1,49 @@
-import 'package:equatable/equatable.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
 
-class Product extends Equatable {
-  final String id;
-  final String name;
-  final String description;
-  final double price;
-  final String imagePath;
+class Product {
+  String? id;
+  String? name;
+  String? desc;
+  double? price;
+  String? categoryId;
+  bool? available;
+  Category? category;
+  String? imageUrl;
 
-  const Product({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.imagePath,
+  Product({
+    this.id,
+    this.name,
+    this.desc,
+    this.price,
+    this.categoryId,
+    this.available,
+    this.category,
+    this.imageUrl,
   });
 
-  @override
-  List<Object?> get props => [id, name, description, price, imagePath];
+  Product.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    desc = json['desc'];
+    price = json['price'];
+    categoryId = json['category_id'];
+    available = json['available'];
+    category = json['category'] != null
+        ? Category.fromJson(json['category'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['desc'] = desc;
+    data['price'] = price;
+    data['category_id'] = categoryId;
+    data['available'] = available;
+    if (category != null) {
+      data['category'] = category!.toJson();
+    }
+    return data;
+  }
 }

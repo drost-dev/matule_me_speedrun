@@ -46,7 +46,6 @@ final defaultTheme = ThemeData(
       color: _darkGrey,
       letterSpacing: 0,
     ),
-
     bodyLarge: TextStyle(
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontWeight: FontWeight.w600,
