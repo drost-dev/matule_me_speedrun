@@ -1,16 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:matule_me_speedrun/features/home/presentation/cart_screen.dart';
-import 'package:matule_me_speedrun/features/home/presentation/category_screen.dart';
-import 'package:matule_me_speedrun/features/home/presentation/favourite_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/cart_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/category_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/favourite_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/forgot_pass_screen.dart';
-import 'package:matule_me_speedrun/features/home/presentation/home_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/home_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/otp_verification_screen.dart';
-import 'package:matule_me_speedrun/features/home/presentation/popular_screen.dart';
-import 'package:matule_me_speedrun/features/home/presentation/root/root_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/popular_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/root/root_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/sign_in_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/sign_up_screen.dart';
 import 'package:matule_me_speedrun/features/onboard/presentation/onboard_screen.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:matule_me_speedrun/features/home/presentation/widgets/favourites_button.dart';
-import 'package:matule_me_speedrun/features/home/presentation/widgets/product_card_small.dart';
+import 'package:matule_me_speedrun/features/main/presentation/widgets/favourites_button.dart';
+import 'package:matule_me_speedrun/features/main/presentation/widgets/product_card_small.dart';
 
 @RoutePage()
 class FavouriteScreen extends StatefulWidget {

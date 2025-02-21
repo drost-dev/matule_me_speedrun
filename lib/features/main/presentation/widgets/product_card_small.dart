@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 
 class ProductCardSmall extends StatefulWidget {
-  const ProductCardSmall({super.key});
+  const ProductCardSmall({super.key, this.product});
+
+  final Product? product;
 
   @override
   State<ProductCardSmall> createState() => _ProductCardSmallState();
@@ -72,7 +75,7 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                       ),
                     ),
                     Text(
-                      'Nike Air Max',
+                      widget.product?.name ?? 'Nike Air Max',
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontSize: 16,
                         height: 20 / 16,
@@ -80,7 +83,7 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                       ),
                     ),
                     Text(
-                      '₽752.00',
+                      '₽${widget.product?.price ?? 752.00}',
                       style: theme.textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,

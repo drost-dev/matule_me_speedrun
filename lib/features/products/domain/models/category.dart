@@ -1,8 +1,8 @@
 class Category {
-  String? id;
-  String? name;
+  String id = '-1';
+  String name = 'Nameless';
 
-  Category({this.id, this.name});
+  Category({this.id = '-1', this.name = 'Nameless'});
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];

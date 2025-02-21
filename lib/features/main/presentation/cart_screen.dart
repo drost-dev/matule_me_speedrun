@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
-import 'package:matule_me_speedrun/features/home/presentation/widgets/cart_product.dart';
+import 'package:matule_me_speedrun/features/main/presentation/widgets/cart_product.dart';
 
 @RoutePage()
 class CartScreen extends StatefulWidget {

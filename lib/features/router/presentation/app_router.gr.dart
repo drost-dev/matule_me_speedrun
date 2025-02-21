@@ -33,13 +33,15 @@ class CartRoute extends PageRouteInfo<void> {
 class CategoryRoute extends PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute({
     Key? key,
-    required String category,
+    required Category category,
+    required int index,
     List<PageRouteInfo>? children,
   }) : super(
           CategoryRoute.name,
           args: CategoryRouteArgs(
             key: key,
             category: category,
+            index: index,
           ),
           initialChildren: children,
         );
@@ -53,6 +55,7 @@ class CategoryRoute extends PageRouteInfo<CategoryRouteArgs> {
       return CategoryScreen(
         key: args.key,
         category: args.category,
+        index: args.index,
       );
     },
   );
@@ -62,15 +65,18 @@ class CategoryRouteArgs {
   const CategoryRouteArgs({
     this.key,
     required this.category,
+    required this.index,
   });
 
   final Key? key;
 
-  final String category;
+  final Category category;
+
+  final int index;
 
   @override
   String toString() {
-    return 'CategoryRouteArgs{key: $key, category: $category}';
+    return 'CategoryRouteArgs{key: $key, category: $category, index: $index}';
   }
 }
 
@@ -133,13 +139,10 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OnboardScreen]
-class OnboardRoute extends PageRouteInfo<OnboardRouteArgs> {
-  OnboardRoute({
-    dynamic key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class OnboardRoute extends PageRouteInfo<void> {
+  const OnboardRoute({List<PageRouteInfo>? children})
+      : super(
           OnboardRoute.name,
-          args: OnboardRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -148,22 +151,9 @@ class OnboardRoute extends PageRouteInfo<OnboardRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<OnboardRouteArgs>(orElse: () => const OnboardRouteArgs());
-      return OnboardScreen(key: args.key);
+      return const OnboardScreen();
     },
   );
-}
-
-class OnboardRouteArgs {
-  const OnboardRouteArgs({this.key});
-
-  final dynamic key;
-
-  @override
-  String toString() {
-    return 'OnboardRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
