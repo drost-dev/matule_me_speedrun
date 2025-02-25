@@ -15,12 +15,15 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
     on<GoodsEvent>((event, emit) async {
       switch (event) {
         case FetchGoods():
+          emit(GoodsLoading());
+
           var products = await sbRepo.getAllProducts();
           var categories = await sbRepo.getAllCategories();
+
           emit(GoodsLoaded(products: products, categories: categories));
           break;
-        case ToogleFavGood():
-          
+        case ToggleFavGood():
+          await sbRepo.toggleFavourite(event.product);
           break;
       }
     });

@@ -1,5 +1,6 @@
 import 'package:matule_me_speedrun/features/database/domain/repos/database_repo.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/fav.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -61,9 +62,64 @@ class SupabaseRepo extends DatabaseRepo {
 
     for (int i = 0; i < response.length; i++) {
       products.add(Product.fromJson(response[i]));
+      products[i].imageUrl = getProductImage(products[i]);
+    }
+
+    products = await checkFavourites(products);
+
+    return products;
+  }
+
+  @override
+  Future<List<Product>> checkFavourites(List<Product> products) async {
+    if (_client.auth.currentUser != null) {
+      var response = await _client
+          .from('favs')
+          .select('*')
+          .eq('user_id', _client.auth.currentUser!.id);
+      if (response.isNotEmpty) {
+        for (int i = 0; i < response.length; i++) {
+          var fav = Fav.fromJson(response[i]);
+
+          products.firstWhere((e2) {
+            return e2.id == fav.productId;
+          }).isFavourite = true;
+        }
+      }
     }
 
     return products;
+  }
+
+  @override
+  Future<void> toggleFavourite(Product product) async {
+    if (_client.auth.currentUser != null) {
+      if (product.isFavourite) {
+        //убираем из избранных
+        await _client
+            .from('favs')
+            .delete()
+            .eq('product_id', product.id!)
+            .eq('user_id', _client.auth.currentUser!.id);
+      } else {
+        //добавляем
+        await _client.from('favs').upsert(
+              Fav(
+                userId: _client.auth.currentUser!.id,
+                productId: product.id,
+              ).toJson(),
+              defaultToNull: true,
+            );
+      }
+    }
+  }
+
+  @override
+  String getProductImage(Product product) {
+    final String publicUrl =
+        _client.storage.from('products').getPublicUrl('${product.id}.png');
+
+    return publicUrl;
   }
 
   @override

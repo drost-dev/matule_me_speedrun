@@ -9,7 +9,7 @@ sealed class GoodsState extends Equatable {
 
 final class GoodsInitial extends GoodsState {}
 
-// final class GoodsLoading extends GoodsState {}
+final class GoodsLoading extends GoodsState {}
 
 final class GoodsError extends GoodsState {
   final String errorMsg;

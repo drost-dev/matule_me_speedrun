@@ -11,6 +11,11 @@ class FetchGoods extends GoodsEvent {
   const FetchGoods();
 }
 
-class ToogleFavGood extends GoodsEvent {
-  const ToogleFavGood();
+class ToggleFavGood extends GoodsEvent {
+  const ToggleFavGood({required this.product});
+
+  final Product product;
+
+  @override
+  List<Object?> get props => [product];
 }

@@ -9,6 +9,7 @@ class Product {
   bool? available;
   Category? category;
   String? imageUrl;
+  bool isFavourite = false;
 
   Product({
     this.id,
@@ -19,6 +20,7 @@ class Product {
     this.available,
     this.category,
     this.imageUrl,
+    this.isFavourite = false,
   });
 
   Product.fromJson(Map<String, dynamic> json) {

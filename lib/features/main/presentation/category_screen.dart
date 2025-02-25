@@ -23,6 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   GoodsBloc goodsBloc = GetIt.I<GoodsBloc>();
 
   late int selectedIndex = widget.index;
+  late Category selectedCategory = widget.category;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         if (state is GoodsLoaded) {
           setState(() {
             selectedIndex = state.categories.indexWhere(
-              (element) => element.id == widget.category.id,
+              (element) => element.id == selectedCategory.id,
             );
           });
         }
@@ -64,7 +65,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                   ),
                   Text(
-                    widget.category.name,
+                    selectedCategory.name,
                     style: theme.textTheme.headlineSmall,
                   ),
                   const SizedBox(width: 44),
@@ -98,6 +99,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       onTap: () {
                                         setState(() {
                                           selectedIndex = index;
+                                          selectedCategory = state.categories[index];
                                         });
                                       },
                                       child: Container(
@@ -143,6 +145,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     },
                     builder: (context, state) {
                       if (state is GoodsLoaded) {
+                        var products = state.products.where((product) {
+                              return product.categoryId ==
+                                  state.categories[selectedIndex].id;
+                            }).toList();
+
                         return GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -154,19 +161,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             childAspectRatio: 160 / 184,
                           ),
                           itemBuilder: (context, index) {
-                            var products = state.products.where((product) {
-                              return product.categoryId ==
-                                  state.categories[selectedIndex].id;
-                            }).toList();
-
                             return ProductCardSmall(
+                              key: ValueKey(products[index].id),
                               product: products[index],
                             );
                           },
-                          itemCount: state.products.where((product) {
-                            return product.categoryId ==
-                                state.categories[selectedIndex].id;
-                          }).length,
+                          itemCount: products.length,
                         );
                       } else {
                         return const CircularProgressIndicator();

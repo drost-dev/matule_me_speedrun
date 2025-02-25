@@ -9,5 +9,8 @@ abstract class DatabaseRepo {
   Future<void> sendOtp({required String email});
   Future<void> verifyOtp({required String email, required String code});
   Future<List<Product>> getAllProducts();
+  String getProductImage(Product product);
+  Future<List<Product>> checkFavourites(List<Product> products);
+  Future<void> toggleFavourite(Product product);
   Future<List<Category>> getAllCategories();
 }
