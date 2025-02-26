@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 6),
                         state is GoodsLoaded
                             ? GridView.builder(
-                                key: ValueKey(state.favLoaded),
+                                key: ValueKey(state.hashCode),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:

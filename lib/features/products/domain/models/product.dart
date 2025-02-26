@@ -10,9 +10,11 @@ class Product {
   Category? category;
   String? imageUrl;
   bool isFavourite = false;
+  bool addedToCart = false;
 
   Product(
       {this.isFavourite = false,
+      this.addedToCart = false,
       this.id,
       this.name,
       this.desc,

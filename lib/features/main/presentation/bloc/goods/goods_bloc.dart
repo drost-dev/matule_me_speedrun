@@ -20,8 +20,7 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
           var products = await sbRepo.getAllProducts();
           var categories = await sbRepo.getAllCategories();
 
-          emit(GoodsLoaded(
-              products: products, categories: categories));
+          emit(GoodsLoaded(products: products, categories: categories));
 
           var favProducts = await sbRepo.checkFavourites(products);
 
@@ -30,10 +29,21 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
             categories: categories,
             favLoaded: true,
           ));
+
+          var cartProducts = await sbRepo.checkCart(favProducts);
+
+          emit(GoodsLoaded(
+            products: cartProducts,
+            categories: categories,
+            favLoaded: true,
+            cartLoaded: true,
+          ));
           break;
         case ToggleFavGood():
           await sbRepo.toggleFavourite(event.product);
-          // super.add(const FetchGoods());
+          break;
+        case ToggleCartGood():
+          await sbRepo.toggleCart(event.product);
           break;
       }
     });

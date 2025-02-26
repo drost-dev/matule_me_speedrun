@@ -14,8 +14,8 @@ class ProductCardSmall extends StatefulWidget {
 }
 
 class _ProductCardSmallState extends State<ProductCardSmall> {
-  bool inCart = false;
   late bool isFav = widget.product?.isFavourite ?? false;
+  late bool inCart = widget.product?.addedToCart ?? false;
 
   GoodsBloc goodsBloc = GetIt.I<GoodsBloc>();
 
@@ -43,7 +43,6 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                       child: SizedBox.square(
                         dimension: 28,
                         child: IconButton(
-                          key: widget.key,
                           onPressed: () {
                             setState(() {
                               isFav = !isFav;
@@ -52,7 +51,6 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                               goodsBloc.add(
                                 ToggleFavGood(
                                   product: widget.product!,
-                                  isFav: isFav,
                                 ),
                               );
                             }
@@ -137,6 +135,13 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                         setState(() {
                           inCart = !inCart;
                         });
+                        if (widget.product != null) {
+                          goodsBloc.add(
+                            ToggleCartGood(
+                              product: widget.product!,
+                            ),
+                          );
+                        }
                       },
                       child: Container(
                         width: 34,

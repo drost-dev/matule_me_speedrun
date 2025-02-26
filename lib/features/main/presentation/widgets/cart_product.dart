@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 
 class CartProduct extends StatefulWidget {
-  const CartProduct({
-    super.key,
-  });
+  const CartProduct({super.key, required this.product, this.onDelete});
+
+  final Product product;
+  final Function()? onDelete;
 
   @override
   State<CartProduct> createState() => _CartProductState();
@@ -132,27 +134,32 @@ class _CartProductState extends State<CartProduct> {
               color: theme.colorScheme.onSurface,
             ),
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            onEnd: () {
-              setState(() {
-                isAnimating = false;
-              });
+          GestureDetector(
+            onTap: () {
+              widget.onDelete?.call();
             },
-            width: showDelete ? 58 : 0,
-            height: 104,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: theme.colorScheme.red,
-            ),
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 18,
-              height: 20,
-              child: ImageIcon(
-                const AssetImage('icons/trash_bin.png'),
-                size: 20,
-                color: theme.colorScheme.onSurface,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              onEnd: () {
+                setState(() {
+                  isAnimating = false;
+                });
+              },
+              width: showDelete ? 58 : 0,
+              height: 104,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: theme.colorScheme.red,
+              ),
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 18,
+                height: 20,
+                child: ImageIcon(
+                  const AssetImage('icons/trash_bin.png'),
+                  size: 20,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ),
           ),

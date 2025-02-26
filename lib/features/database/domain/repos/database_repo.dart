@@ -12,5 +12,7 @@ abstract class DatabaseRepo {
   String getProductImage(Product product);
   Future<List<Product>> checkFavourites(List<Product> products);
   Future<void> toggleFavourite(Product product);
+  Future<List<Product>> checkCart(List<Product> products);
+  Future<void> toggleCart(Product product);
   Future<List<Category>> getAllCategories();
 }
