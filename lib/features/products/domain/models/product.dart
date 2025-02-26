@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
 
-class Product extends Equatable {
+class Product {
   String? id;
   String? name;
   String? desc;
@@ -47,41 +46,4 @@ class Product extends Equatable {
     }
     return data;
   }
-
-  Product copyWith({
-    String? id,
-    String? name,
-    String? desc,
-    double? price,
-    String? categoryId,
-    bool? available,
-    Category? category,
-    String? imageUrl,
-    bool? isFavourite,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      desc: desc ?? this.desc,
-      price: price ?? this.price,
-      categoryId: categoryId ?? this.categoryId,
-      available: available ?? this.available,
-      category: category ?? this.category,
-      imageUrl: imageUrl ?? this.imageUrl,
-      isFavourite: isFavourite ?? this.isFavourite,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        desc,
-        price,
-        categoryId,
-        available,
-        category,
-        imageUrl,
-        isFavourite
-      ];
 }

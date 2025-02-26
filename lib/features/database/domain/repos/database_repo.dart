@@ -11,6 +11,6 @@ abstract class DatabaseRepo {
   Future<List<Product>> getAllProducts();
   String getProductImage(Product product);
   Future<List<Product>> checkFavourites(List<Product> products);
-  Future<void> updateFavourite(Product product);
+  Future<void> toggleFavourite(Product product);
   Future<List<Category>> getAllCategories();
 }
