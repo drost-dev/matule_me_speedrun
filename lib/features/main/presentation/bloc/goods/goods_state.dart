@@ -4,7 +4,7 @@ sealed class GoodsState extends Equatable {
   const GoodsState();
   
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 final class GoodsInitial extends GoodsState {}
@@ -17,15 +17,16 @@ final class GoodsError extends GoodsState {
   const GoodsError({required this.errorMsg});
 
   @override
-  List<Object?> get props => [errorMsg];
+  List<Object> get props => [errorMsg];
 }
 
 final class GoodsLoaded extends GoodsState {
   final List<Product> products;
   final List<Category> categories;
+  final bool favLoaded;
 
-  const GoodsLoaded({required this.products, required this.categories});
+  const GoodsLoaded({required this.products, required this.categories, this.favLoaded = false});
 
   @override
-  List<Object?> get props => [products, categories];
+  List<Object> get props => [products, categories, favLoaded];
 }

@@ -25,12 +25,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final AuthBloc _authBloc = GetIt.I<AuthBloc>();
 
   @override
-  void initState() {
-    _authBloc.add(AuthLoad());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(

@@ -4,12 +4,16 @@ import 'package:matule_me_speedrun/features/auth/presentation/bloc/auth_bloc.dar
 import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/database/data/repos/supabase/supabase_repo.dart';
 import 'package:matule_me_speedrun/features/main/presentation/bloc/goods/goods_bloc.dart';
+import 'package:matule_me_speedrun/features/products/data/product_service.dart';
 import 'package:matule_me_speedrun/features/router/presentation/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   SupabaseRepo sbRepo = await SupabaseRepo.init();
   GetIt.I.registerSingleton(sbRepo);
+
+  ProductService productService = ProductService();
+  GetIt.I.registerSingleton(productService);
 
   AuthBloc authBloc = AuthBloc();
   GetIt.instance.registerLazySingleton(() => authBloc);

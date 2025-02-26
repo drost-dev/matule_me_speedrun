@@ -65,8 +65,6 @@ class SupabaseRepo extends DatabaseRepo {
       products[i].imageUrl = getProductImage(products[i]);
     }
 
-    products = await checkFavourites(products);
-
     return products;
   }
 
@@ -81,9 +79,11 @@ class SupabaseRepo extends DatabaseRepo {
         for (int i = 0; i < response.length; i++) {
           var fav = Fav.fromJson(response[i]);
 
-          products.firstWhere((e2) {
-            return e2.id == fav.productId;
-          }).isFavourite = true;
+          int index = products.indexWhere((e) {
+            return e.id == fav.productId;
+          });
+
+          products[index].isFavourite = true;
         }
       }
     }

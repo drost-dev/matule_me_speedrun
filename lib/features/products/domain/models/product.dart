@@ -11,17 +11,16 @@ class Product {
   String? imageUrl;
   bool isFavourite = false;
 
-  Product({
-    this.id,
-    this.name,
-    this.desc,
-    this.price,
-    this.categoryId,
-    this.available,
-    this.category,
-    this.imageUrl,
-    this.isFavourite = false,
-  });
+  Product(
+      {this.isFavourite = false,
+      this.id,
+      this.name,
+      this.desc,
+      this.price,
+      this.categoryId,
+      this.available,
+      this.category,
+      this.imageUrl});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,9 +29,8 @@ class Product {
     price = json['price'];
     categoryId = json['category_id'];
     available = json['available'];
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
   }
 
   Map<String, dynamic> toJson() {

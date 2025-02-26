@@ -44,14 +44,17 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                         dimension: 28,
                         child: IconButton(
                           onPressed: () {
-                            if (widget.product != null) {
-                              goodsBloc.add(
-                                ToggleFavGood(product: widget.product!),
-                              );
-                            }
                             setState(() {
                               isFav = !isFav;
                             });
+                            if (widget.product != null) {
+                              goodsBloc.add(
+                                ToggleFavGood(
+                                  product: widget.product!,
+                                  isFav: isFav,
+                                ),
+                              );
+                            }
                           },
                           icon: ImageIcon(
                             const AssetImage('icons/heart.png'),
