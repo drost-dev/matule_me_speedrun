@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 itemBuilder: (context, index) {
                                   return ProductCardSmall(
-                                    key: ValueKey(state.products[index].hashCode),
+                                    key: ValueKey(state.products[index].id),
                                     product: state.products[index],
                                   );
                                 },

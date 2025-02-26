@@ -92,9 +92,9 @@ class SupabaseRepo extends DatabaseRepo {
   }
 
   @override
-  Future<void> toggleFavourite(Product product) async {
+  Future<void> updateFavourite(Product product) async {
     if (_client.auth.currentUser != null) {
-      if (product.isFavourite) {
+      if (!product.isFavourite) {
         //убираем из избранных
         await _client
             .from('favs')

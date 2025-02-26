@@ -43,6 +43,7 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                       child: SizedBox.square(
                         dimension: 28,
                         child: IconButton(
+                          key: widget.key,
                           onPressed: () {
                             setState(() {
                               isFav = !isFav;

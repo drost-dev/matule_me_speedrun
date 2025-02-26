@@ -12,34 +12,32 @@ part 'goods_state.dart';
 class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
   GoodsBloc() : super(GoodsInitial()) {
     SupabaseRepo sbRepo = GetIt.I<SupabaseRepo>();
-    // ProductService productService = GetIt.I<ProductService>();
+    ProductService productService = GetIt.I<ProductService>();
 
     on<GoodsEvent>((event, emit) async {
       switch (event) {
         case FetchGoods():
-          // emit(GoodsLoading());
+          emit(GoodsLoading());
 
           var products = await sbRepo.getAllProducts();
           var categories = await sbRepo.getAllCategories();
-          // productService.allProducts = products;
+          productService.allProducts = products;
 
-          // emit(GoodsLoaded(
-          //     products: productService.allProducts, categories: categories));
           emit(GoodsLoaded(
-              products: products, categories: categories));
+              products: productService.allProducts, categories: categories, favLoaded: false));
 
           var favProducts = await sbRepo.checkFavourites(products);
-          // productService.allProducts = favProducts;
+          productService.allProducts = favProducts;
 
           emit(GoodsLoaded(
-            products: favProducts, // productService.allProducts,
+            products: productService.allProducts,
             categories: categories,
             favLoaded: true,
           ));
           break;
         case ToggleFavGood():
-          // productService.toggleFavourite(event.product);
-          await sbRepo.toggleFavourite(event.product);
+          productService.toggleFavourite(event.product);
+          await sbRepo.updateFavourite(event.product);
           // super.add(const FetchGoods());
           break;
       }

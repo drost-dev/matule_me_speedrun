@@ -41,6 +41,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 child: IconButton(
                   onPressed: () {
                     // context.router.maybePop();
+                    goodsBloc.add(const FetchGoods());
                     AutoTabsRouter.of(context).back();
                   },
                   style: TextButton.styleFrom(
