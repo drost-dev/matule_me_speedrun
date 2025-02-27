@@ -29,6 +29,7 @@ class _PopularScreenState extends State<PopularScreen> {
                 dimension: 44,
                 child: IconButton(
                   onPressed: () {
+                    
                     context.router.maybePop();
                   },
                   style: TextButton.styleFrom(

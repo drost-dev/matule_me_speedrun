@@ -54,6 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     dimension: 44,
                     child: IconButton(
                       onPressed: () {
+                        goodsBloc.add(const FetchGoods());
                         context.router.maybePop();
                       },
                       style: TextButton.styleFrom(

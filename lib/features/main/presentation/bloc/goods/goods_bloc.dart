@@ -39,11 +39,36 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
             cartLoaded: true,
           ));
           break;
+        case UpdateLoadedGoods():
+          if (super.state is GoodsLoaded) {
+            var state = super.state as GoodsLoaded;
+            var updatedProduct = event.updatedGood;
+
+            var updatedProducts = state.products.map((product) {
+                if (product.id == updatedProduct.id) {
+                  return updatedProduct;
+                } else {
+                  return product;
+                }
+              }).toList();
+
+              emit(GoodsReloaded());
+
+              emit(GoodsLoaded(
+                products: updatedProducts,
+                categories: state.categories,
+                favLoaded: state.favLoaded,
+                cartLoaded: state.cartLoaded,
+              ));
+          }
+          break;
         case ToggleFavGood():
-          await sbRepo.toggleFavourite(event.product);
+          var newProduct = await sbRepo.toggleFavourite(event.product);
+          super.add(UpdateLoadedGoods(updatedGood: newProduct));
           break;
         case ToggleCartGood():
-          await sbRepo.toggleCart(event.product);
+          var newProduct = await sbRepo.toggleCart(event.product);
+          super.add(UpdateLoadedGoods(updatedGood: newProduct));
           break;
       }
     });

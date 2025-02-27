@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final categories = const ['Все', 'Outdoor', 'Tennis', 'Running'];
+  bool cartHasItems = false;
 
   final goodsBloc = GetIt.I<GoodsBloc>();
   final authBloc = GetIt.I<AuthBloc>();
@@ -47,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocConsumer(
         bloc: goodsBloc,
         listener: (context, state) {
+          if (state is GoodsLoaded && state.cartLoaded) {
+            setState(() {
+              cartHasItems = state.products.any((element) => element.addedToCart);
+            });
+          }
           // TODO: implement listener
         },
         builder: (context, state) {
@@ -65,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Главная',
                       style: theme.textTheme.displayMedium,
                     ),
-                    const CartButton(hasItems: true),
+                    CartButton(hasItems: cartHasItems),
                   ],
                 ),
               ),

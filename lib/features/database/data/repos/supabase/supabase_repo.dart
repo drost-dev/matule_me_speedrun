@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:matule_me_speedrun/features/database/domain/repos/database_repo.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/cart_item.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
@@ -84,7 +86,7 @@ class SupabaseRepo extends DatabaseRepo {
             return e.id == fav.productId;
           });
 
-          products[index].isFavourite = true;
+          if (index >= 0) products[index].isFavourite = true;
         }
       }
     }
@@ -93,7 +95,7 @@ class SupabaseRepo extends DatabaseRepo {
   }
 
   @override
-  Future<void> toggleFavourite(Product product) async {
+  Future<Product> toggleFavourite(Product product) async {
     if (_client.auth.currentUser != null) {
       if (product.isFavourite) {
         //убираем из избранных
@@ -112,7 +114,9 @@ class SupabaseRepo extends DatabaseRepo {
               defaultToNull: true,
             );
       }
+      product.isFavourite = !product.isFavourite;
     }
+    return product;
   }
 
   @override
@@ -131,7 +135,7 @@ class SupabaseRepo extends DatabaseRepo {
             return e.id == cartItem.productId;
           });
 
-          products[index].addedToCart = true;
+          if (index >= 0) products[index].addedToCart = true;
         }
       }
     }
@@ -140,7 +144,7 @@ class SupabaseRepo extends DatabaseRepo {
   }
 
   @override
-  Future<void> toggleCart(Product product) async {
+  Future<Product> toggleCart(Product product) async {
     if (_client.auth.currentUser != null) {
       if (product.addedToCart) {
         //убираем из корзины
@@ -159,7 +163,9 @@ class SupabaseRepo extends DatabaseRepo {
               defaultToNull: true,
             );
       }
+      product.addedToCart = !product.addedToCart;
     }
+    return product;
   }
 
   @override

@@ -11,6 +11,12 @@ class FetchGoods extends GoodsEvent {
   const FetchGoods();
 }
 
+class UpdateLoadedGoods extends GoodsEvent {
+  const UpdateLoadedGoods({required this.updatedGood});
+
+  final Product updatedGood;
+}
+
 class ToggleFavGood extends GoodsEvent {
   const ToggleFavGood({required this.product,});
 

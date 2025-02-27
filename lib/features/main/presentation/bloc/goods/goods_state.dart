@@ -36,3 +36,5 @@ final class GoodsLoaded extends GoodsState {
   @override
   List<Object> get props => [products, categories, favLoaded, cartLoaded];
 }
+
+final class GoodsReloaded extends GoodsState {}

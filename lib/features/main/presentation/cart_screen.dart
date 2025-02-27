@@ -53,6 +53,8 @@ class _CartScreenState extends State<CartScreen> {
             .where((element) => element.addedToCart)
             .toList();
       });
+    } else {
+      goodsBloc.add(const FetchGoods());
     }
     super.initState();
   }
@@ -74,6 +76,7 @@ class _CartScreenState extends State<CartScreen> {
                 dimension: 44,
                 child: IconButton(
                   onPressed: () {
+                    goodsBloc.add(const FetchGoods());
                     context.router.maybePop();
                   },
                   style: TextButton.styleFrom(

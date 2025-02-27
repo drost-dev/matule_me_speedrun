@@ -23,6 +23,7 @@ class _CartProductState extends State<CartProduct> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return GestureDetector(
       onPanUpdate: (details) {
         if (!isAnimating) {
@@ -132,6 +133,24 @@ class _CartProductState extends State<CartProduct> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: theme.colorScheme.onSurface,
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Image.network(widget.product.imageUrl!),
+                  ),
+                ),
+              ],
             ),
           ),
           GestureDetector(
