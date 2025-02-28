@@ -18,13 +18,15 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: OnboardRoute.page, path: '/onboard'),
+        AutoRoute(
+          page: OnboardRoute.page,
+          path: '/onboard',
+          initial: true,
+        ),
         AutoRoute(
           page: SignInRoute.page,
           path: '/signin',
-          initial: true,
         ),
-
         AutoRoute(page: SignUpRoute.page, path: '/signup'),
         AutoRoute(page: ForgotPassRoute.page, path: '/forgot'),
         AutoRoute(page: OtpVerificationRoute.page, path: '/otp'),
@@ -36,7 +38,6 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: FavouriteRoute.page, path: 'favourite'),
           ],
         ),
-        
         AutoRoute(page: PopularRoute.page, path: '/popular'),
         AutoRoute(page: CategoryRoute.page, path: '/category'),
         AutoRoute(page: CartRoute.page, path: '/cart'),

@@ -13,7 +13,9 @@ class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
 
   @override
-  State<OnboardScreen> createState() => _OnboardScreenState();
+  State<OnboardScreen> createState() {
+    return _OnboardScreenState();
+  }
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
@@ -57,134 +59,144 @@ class _OnboardScreenState extends State<OnboardScreen> {
           ),
         ),
         padding: const EdgeInsets.only(top: 70, bottom: 36),
-        child: Stack(
-          children: [
-            if (data.length == 3)
-              Align(
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'ДОБРО\nПОЖАЛОВАТЬ',
-                  style: theme.textTheme.displayMedium?.copyWith(
-                    fontSize: 30,
-                    color: theme.colorScheme.onSurface,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (child, animation) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          child: Stack(
+            key: ValueKey(data.length),
+            children: [
+              if (data.length == 3)
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    'ДОБРО\nПОЖАЛОВАТЬ',
+                    style: theme.textTheme.displayMedium?.copyWith(
+                      fontSize: 30,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
+                ),
+              Align(
+                alignment:
+                    data.length == 3 ? Alignment.center : Alignment.topCenter,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 302,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'images/onboard_${(data.length - 3).abs()}.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    data.first.title == null
+                        ? const SizedBox(height: 26)
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(height: 60),
+                                Text(
+                                  data.first.title ?? '',
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      theme.textTheme.displayMedium?.copyWith(
+                                    fontSize: 34,
+                                    height: 44.2 / 34,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  data.first.desc ?? '',
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      theme.textTheme.headlineSmall?.copyWith(
+                                    fontWeight: FontWeight.w100,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                ),
+                                const SizedBox(height: 40),
+                              ],
+                            ),
+                          ),
+                    SizedBox(
+                      height: 5,
+                      width: 123,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          if ((data.length - 3).abs() == index) {
+                            return Container(
+                              height: 5,
+                              width: 43,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              height: 5,
+                              width: 28,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: theme.disabledColor,
+                              ),
+                            );
+                          }
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(width: 12);
+                        },
+                        itemCount: 3,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            Align(
-              alignment:
-                  data.length == 3 ? Alignment.center : Alignment.topCenter,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 302,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('images/onboard_${(data.length-3).abs()}.png'),
-                        fit: BoxFit.fill,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  constraints: const BoxConstraints.expand(height: 50),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextButton(
+                    onPressed: () {
+                      if (data.length > 1) {
+                        setState(() {
+                          data.removeFirst();
+                        });
+                        var sp = GetIt.I<SharedPreferences>();
+                        sp.setInt('onboardIndex', 3 - data.length);
+                      } else {
+                        context.router.replace(const HomeRoute());
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: theme.colorScheme.onSurface,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                    ),
+                    child: Text(
+                      data.length == 3 ? 'Начать' : 'Далее',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ),
-                  data.first.title == null
-                      ? const SizedBox(height: 26)
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(height: 60),
-                              Text(
-                                data.first.title ?? '',
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.displayMedium?.copyWith(
-                                  fontSize: 34,
-                                  height: 44.2 / 34,
-                                  color: theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                data.first.desc ?? '',
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.w100,
-                                  color: theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              const SizedBox(height: 40),
-                            ],
-                          ),
-                        ),
-                  SizedBox(
-                    height: 5,
-                    width: 123,
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        if ((data.length-3).abs() == index) {
-                          return Container(
-                            height: 5,
-                            width: 43,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: theme.colorScheme.onSurface,
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            height: 5,
-                            width: 28,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: theme.disabledColor,
-                            ),
-                          );
-                        }
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 12);
-                      },
-                      itemCount: 3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                constraints: const BoxConstraints.expand(height: 50),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextButton(
-                  onPressed: () {
-                    if (data.length > 1) {
-                      setState(() {
-                        data.removeFirst();
-                      });
-                      var sp = GetIt.I<SharedPreferences>();
-                      sp.setInt('onboardIndex', 3-data.length);
-                    } else {
-                      context.router.replace(const HomeRoute());
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: theme.colorScheme.onSurface,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                  ),
-                  child: Text(
-                    data.length == 3 ? 'Начать' : 'Далее',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

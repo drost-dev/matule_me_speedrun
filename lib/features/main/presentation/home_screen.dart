@@ -8,6 +8,7 @@ import 'package:matule_me_speedrun/features/main/presentation/bloc/goods/goods_b
 import 'package:matule_me_speedrun/features/router/presentation/app_router.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/cart_button.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/product_card_small.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -41,7 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
             goodsBloc.add(const FetchGoods());
             break;
           case AuthLoaded():
-            context.router.push(const SignInRoute());
+            SharedPreferences sp = GetIt.I<SharedPreferences>();
+            sp.getInt('onboardIndex')! < 2 ?
+            context.router.replace(const OnboardRoute()) :
+            context.router.replace(const SignInRoute());
             break;
         }
       },
