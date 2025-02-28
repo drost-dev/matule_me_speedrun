@@ -32,6 +32,103 @@ flutter:
   assets:
     - assets/
 
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Black.ttf
+          weight: 900
+        - asset: assets/fonts/poppins/Poppins-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/poppins/Poppins-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins/Poppins-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins/Poppins-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins/Poppins-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/poppins/Poppins-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/poppins/Poppins-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/poppins/Poppins-ThinItalic.ttf
+          weight: 100
+          style: italic
+
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/poppins/Raleway-v4020-Black.ttf
+          weight: 900
+        - asset: assets/fonts/poppins/Raleway-v4020-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/poppins/Raleway-v4020-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins/Raleway-v4020-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Raleway-v4020-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins/Raleway-v4020-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins/Raleway-v4020-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-Light.ttf
+          weight: 300
+        - asset: assets/fonts/poppins/Raleway-v4020-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/poppins/Raleway-v4020-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/poppins/Raleway-v4020-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/poppins/Raleway-v4020-ThinItalic.ttf
+          weight: 100
+          style: italic
+
 flutter_native_splash:
   color: "#48B2E7"
   image: "assets/icons/splash.png"
