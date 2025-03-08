@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/main/presentation/bloc/goods/goods_bloc.dart';
-import 'package:matule_me_speedrun/features/main/presentation/widgets/favourites_button.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/product_card_small.dart';
 
 @RoutePage()
@@ -20,9 +20,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   void initState() {
     super.initState();
-    goodsBloc.add(const FetchGoods());
+    goodsBloc.add(const GoodsFetch());
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -41,14 +41,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 child: IconButton(
                   onPressed: () {
                     // context.router.maybePop();
-                    goodsBloc.add(const FetchGoods());
+                    goodsBloc.add(const GoodsFetch());
                     AutoTabsRouter.of(context).back();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: theme.colorScheme.onSurface,
                   ),
                   icon: const ImageIcon(
-                    AssetImage('icons/arrow_left.png'),
+                    AssetImage('assets/icons/arrow_left.png'),
                   ),
                 ),
               ),
@@ -56,7 +56,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 'Избранное',
                 style: theme.textTheme.headlineSmall,
               ),
-              const FavouritesButton(),
+              const SizedBox.square(dimension: 44),
+              // const FavouritesButton(),
             ],
           ),
         ),
@@ -68,7 +69,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         },
         builder: (context, state) {
           if (state is GoodsLoaded) {
-            var favProducts = state.products.where((element) => element.isFavourite).toList();
+            var favProducts =
+                state.products.where((element) => element.isFavourite).toList();
 
             return SingleChildScrollView(
               child: Padding(
@@ -92,7 +94,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               ),
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(
+                color: theme.colorScheme.blue,
+              ),
+            );
           }
         },
       ),

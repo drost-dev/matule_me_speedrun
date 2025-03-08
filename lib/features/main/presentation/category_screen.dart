@@ -54,14 +54,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     dimension: 44,
                     child: IconButton(
                       onPressed: () {
-                        goodsBloc.add(const FetchGoods());
+                        goodsBloc.add(const GoodsFetch());
                         context.router.maybePop();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: theme.colorScheme.onSurface,
                       ),
                       icon: const ImageIcon(
-                        AssetImage('icons/arrow_left.png'),
+                        AssetImage('assets/icons/arrow_left.png'),
                       ),
                     ),
                   ),
@@ -100,7 +100,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       onTap: () {
                                         setState(() {
                                           selectedIndex = index;
-                                          selectedCategory = state.categories[index];
+                                          selectedCategory =
+                                              state.categories[index];
                                         });
                                       },
                                       child: Container(
@@ -133,7 +134,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   itemCount: state.categories.length,
                                   shrinkWrap: true,
                                 )
-                              : const CircularProgressIndicator(),
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                    color: theme.colorScheme.blue,
+                                  ),
+                                ),
                         ),
                       ],
                     ),
@@ -147,9 +152,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     builder: (context, state) {
                       if (state is GoodsLoaded) {
                         var products = state.products.where((product) {
-                              return product.categoryId ==
-                                  state.categories[selectedIndex].id;
-                            }).toList();
+                          return product.categoryId ==
+                              state.categories[selectedIndex].id;
+                        }).toList();
 
                         return GridView.builder(
                           shrinkWrap: true,
@@ -170,7 +175,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           itemCount: products.length,
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: theme.colorScheme.blue,
+                          ),
+                        );
                       }
                     },
                   ),

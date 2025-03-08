@@ -25,6 +25,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: theme.colorScheme.onSurface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110),
@@ -42,7 +43,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   backgroundColor: theme.colorScheme.surface,
                 ),
                 icon: const ImageIcon(
-                  AssetImage('icons/arrow_left.png'),
+                  AssetImage('assets/icons/arrow_left.png'),
                 ),
               ),
             ),
@@ -61,7 +62,8 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   context: context,
                   builder: (context) {
                     Future.delayed(const Duration(seconds: 3), () {
-                      if (context.mounted) context.router.replace(const OtpVerificationRoute());
+                      if (context.mounted)
+                        context.router.replace(const OtpVerificationRoute());
                     });
 
                     return Dialog(
@@ -84,7 +86,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                               backgroundColor: theme.colorScheme.blue,
                               radius: 22,
                               child: const ImageIcon(
-                                AssetImage('icons/mail.png'),
+                                AssetImage('assets/icons/mail.png'),
                                 size: 24,
                                 color: Colors.white,
                               ),

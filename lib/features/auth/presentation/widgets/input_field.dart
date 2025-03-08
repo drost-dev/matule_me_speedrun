@@ -83,7 +83,7 @@ class _InputFieldState extends State<InputField> {
                             });
                           },
                           icon: const ImageIcon(
-                            AssetImage("icons/eye.png"),
+                            AssetImage('assets/icons/eye.png'),
                           ),
                         ),
                       )

@@ -33,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: theme.colorScheme.onSurface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110),
@@ -50,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   backgroundColor: theme.colorScheme.surface,
                 ),
                 icon: const ImageIcon(
-                  AssetImage('icons/arrow_left.png'),
+                  AssetImage('assets/icons/arrow_left.png'),
                 ),
               ),
             ),
@@ -68,16 +69,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 context.router.replace(const HomeRoute());
                 break;
               case AuthError():
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    state.message,
-                    style: theme.textTheme.bodyMedium,
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      state.message,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    backgroundColor: theme.colorScheme.red,
                   ),
-                  backgroundColor: theme.colorScheme.red,
-                ),
-              );
-              break;
+                );
+                break;
             }
           },
           builder: (context, state) {
@@ -227,7 +228,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ),
                                           alignment: Alignment.center,
                                           child: _isAgreed
-                                              ? Image.asset('icons/shield.png')
+                                              ? Image.asset('assets/icons/shield.png')
                                               : null,
                                         ),
                                       ),

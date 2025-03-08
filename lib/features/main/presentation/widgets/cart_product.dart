@@ -1,12 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 
 class CartProduct extends StatefulWidget {
-  const CartProduct({super.key, required this.product, this.onDelete});
+  const CartProduct({
+    super.key,
+    required this.product,
+    this.onDelete,
+    this.onAmountChanged,
+  });
 
   final Product product;
   final Function()? onDelete;
+  final Function(int amount)? onAmountChanged;
 
   @override
   State<CartProduct> createState() => _CartProductState();
@@ -18,7 +26,24 @@ class _CartProductState extends State<CartProduct> {
 
   bool isAnimating = false;
 
-  int amount = 1;
+  late int amount = widget.product.cart!.amount!;
+
+  Timer? _debounce;
+
+  void _debounceAmount() {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+    _debounce = Timer(Duration(milliseconds: 500), () {
+      widget.onAmountChanged?.call(amount);
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +92,7 @@ class _CartProductState extends State<CartProduct> {
       },
       child: Row(
         children: [
+          //amount
           AnimatedContainer(
             duration: const Duration(milliseconds: 100),
             onEnd: () {
@@ -86,12 +112,15 @@ class _CartProductState extends State<CartProduct> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      amount++;
-                    });
+                    if (amount < 5) {
+                      setState(() {
+                        amount++;
+                      });
+                      _debounceAmount();
+                    }
                   },
                   child: ImageIcon(
-                    const AssetImage('icons/plus.png'),
+                    const AssetImage('assets/icons/plus.png'),
                     size: 14,
                     color: theme.colorScheme.onSurface,
                   ),
@@ -103,12 +132,13 @@ class _CartProductState extends State<CartProduct> {
                       setState(() {
                         amount--;
                       });
+                      _debounceAmount();
                     }
                   },
                   child: SizedBox(
-                    height: 2,
+                    height: 14,
                     child: ImageIcon(
-                      const AssetImage('icons/minus.png'),
+                      const AssetImage('assets/icons/minus.png'),
                       color: theme.colorScheme.onSurface,
                       size: 14,
                     ),
@@ -117,42 +147,73 @@ class _CartProductState extends State<CartProduct> {
               ],
             ),
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            onEnd: () {
-              setState(() {
-                isAnimating = false;
-              });
-            },
-            margin: EdgeInsets.only(
-              right: showDelete ? 10 : 0,
-              left: showAmount ? 10 : 0,
-            ),
-            width: (showAmount || showDelete) ? 267 : 335,
-            height: 104,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: theme.colorScheme.onSurface,
-            ),
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.surface,
-                      borderRadius: BorderRadius.circular(8),
+          //product
+          Expanded(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              onEnd: () {
+                setState(() {
+                  isAnimating = false;
+                });
+              },
+              margin: EdgeInsets.only(
+                right: showDelete ? 10 : 0,
+                left: showAmount ? 10 : 0,
+              ),
+              width: (showAmount || showDelete)
+                  ? 267 * MediaQuery.of(context).size.width / 375
+                  : 335 * MediaQuery.of(context).size.width / 375,
+              height: 104,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: theme.colorScheme.onSurface,
+              ),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Image.network(widget.product.imageUrl!),
                     ),
-                    child: Image.network(widget.product.imageUrl!),
                   ),
-                ),
-              ],
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.product.name!,
+                          style:
+                              theme.textTheme.bodyLarge?.copyWith(fontSize: 11),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          widget.product.category!.name,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                              fontSize: 11, fontWeight: FontWeight.w200),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                      child: Text(
+                    "${widget.product.price! * amount}₽",
+                    style: theme.textTheme.bodyLarge?.copyWith(fontSize: 11),
+                    textAlign: TextAlign.center,
+                  )),
+                ],
+              ),
             ),
           ),
+          //delete
           GestureDetector(
             onTap: () {
               widget.onDelete?.call();
@@ -175,7 +236,7 @@ class _CartProductState extends State<CartProduct> {
                 width: 18,
                 height: 20,
                 child: ImageIcon(
-                  const AssetImage('icons/trash_bin.png'),
+                  const AssetImage('assets/icons/trash_bin.png'),
                   size: 20,
                   color: theme.colorScheme.onSurface,
                 ),

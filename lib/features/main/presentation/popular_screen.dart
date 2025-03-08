@@ -29,14 +29,13 @@ class _PopularScreenState extends State<PopularScreen> {
                 dimension: 44,
                 child: IconButton(
                   onPressed: () {
-                    
                     context.router.maybePop();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: theme.colorScheme.onSurface,
                   ),
                   icon: const ImageIcon(
-                    AssetImage('icons/arrow_left.png'),
+                    AssetImage('assets/icons/arrow_left.png'),
                   ),
                 ),
               ),
@@ -62,7 +61,7 @@ class _PopularScreenState extends State<PopularScreen> {
               crossAxisCount: 2,
               mainAxisSpacing: 13,
               crossAxisSpacing: 13,
-              childAspectRatio: 160/184,
+              childAspectRatio: 160 / 184,
             ),
             itemBuilder: (context, index) {
               return const ProductCardSmall();

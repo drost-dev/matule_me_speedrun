@@ -85,13 +85,15 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      height: 302,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'images/onboard_${(data.length - 3).abs()}.png'),
-                          fit: BoxFit.fill,
+                    AspectRatio(
+                      aspectRatio: 375 / 302,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/onboard_${(data.length - 3).abs()}.png'),
+                            fit: BoxFit.fitHeight,
+                          ),
                         ),
                       ),
                     ),

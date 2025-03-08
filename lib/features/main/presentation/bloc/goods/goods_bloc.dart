@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:matule_me_speedrun/features/database/data/repos/supabase/supabase_repo.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/cart_item.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 
@@ -14,10 +15,16 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
 
     on<GoodsEvent>((event, emit) async {
       switch (event) {
-        case FetchGoods():
+        case GoodsFetch():
           emit(GoodsLoading());
 
-          var products = await sbRepo.getAllProducts();
+          List<Product> products;
+
+          if (event.query == null) {
+            products = await sbRepo.getAllProducts();
+          } else {
+            products = await sbRepo.searchProducts(event.query!);
+          }
           var categories = await sbRepo.getAllCategories();
 
           emit(GoodsLoaded(products: products, categories: categories));
@@ -45,21 +52,21 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
             var updatedProduct = event.updatedGood;
 
             var updatedProducts = state.products.map((product) {
-                if (product.id == updatedProduct.id) {
-                  return updatedProduct;
-                } else {
-                  return product;
-                }
-              }).toList();
+              if (product.id == updatedProduct.id) {
+                return updatedProduct;
+              } else {
+                return product;
+              }
+            }).toList();
 
-              emit(GoodsReloaded());
+            emit(GoodsReloaded());
 
-              emit(GoodsLoaded(
-                products: updatedProducts,
-                categories: state.categories,
-                favLoaded: state.favLoaded,
-                cartLoaded: state.cartLoaded,
-              ));
+            emit(GoodsLoaded(
+              products: updatedProducts,
+              categories: state.categories,
+              favLoaded: state.favLoaded,
+              cartLoaded: state.cartLoaded,
+            ));
           }
           break;
         case ToggleFavGood():
@@ -70,6 +77,8 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
           var newProduct = await sbRepo.toggleCart(event.product);
           super.add(UpdateLoadedGoods(updatedGood: newProduct));
           break;
+        case UpdateCartAmountGood():
+          await sbRepo.updateCartAmount(event.cartItem, event.newAmount);
       }
     });
   }

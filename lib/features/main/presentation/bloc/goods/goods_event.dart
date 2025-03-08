@@ -7,8 +7,10 @@ sealed class GoodsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchGoods extends GoodsEvent {
-  const FetchGoods();
+class GoodsFetch extends GoodsEvent {
+  const GoodsFetch({this.query});
+
+  final String? query;
 }
 
 class UpdateLoadedGoods extends GoodsEvent {
@@ -18,7 +20,9 @@ class UpdateLoadedGoods extends GoodsEvent {
 }
 
 class ToggleFavGood extends GoodsEvent {
-  const ToggleFavGood({required this.product,});
+  const ToggleFavGood({
+    required this.product,
+  });
 
   final Product product;
 
@@ -33,4 +37,14 @@ class ToggleCartGood extends GoodsEvent {
 
   @override
   List<Object?> get props => [product];
+}
+
+class UpdateCartAmountGood extends GoodsEvent {
+  const UpdateCartAmountGood({required this.cartItem, required this.newAmount});
+
+  final CartItem cartItem;
+  final int newAmount;
+
+  @override
+  List<Object?> get props => [cartItem];
 }

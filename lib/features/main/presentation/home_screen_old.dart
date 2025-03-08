@@ -22,7 +22,7 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
 
   @override
   void initState() {
-    goodsBloc.add(const FetchGoods());
+    goodsBloc.add(const GoodsFetch());
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('icons/hamburger.png'),
+                  Image.asset('assets/icons/hamburger.png'),
                   Text(
                     'Главная',
                     style: theme.textTheme.displayMedium,
@@ -102,7 +102,7 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
                                 padding:
                                     const EdgeInsets.only(left: 26, right: 12),
                                 child: ImageIcon(
-                                  const AssetImage('icons/search.png'),
+                                  const AssetImage('assets/icons/search.png'),
                                   size: 24,
                                   color: theme.colorScheme.darkGrey,
                                 ),
@@ -117,7 +117,7 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
                         child: IconButton(
                           onPressed: () {},
                           icon: ImageIcon(
-                            const AssetImage('icons/filters.png'),
+                            const AssetImage('assets/icons/filters.png'),
                             size: 24,
                             color: theme.colorScheme.onSurface,
                           ),
@@ -182,7 +182,11 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
                                 itemCount: state.categories.length,
                                 shrinkWrap: true,
                               )
-                            : const CircularProgressIndicator(),
+                            : Center(
+                                child: CircularProgressIndicator(
+                                  color: theme.colorScheme.blue,
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -220,8 +224,14 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ProductCardSmall(product: state is GoodsLoaded ? state.products[0] : null,),
-                          ProductCardSmall(product: state is GoodsLoaded ? state.products[0] : null,),
+                          ProductCardSmall(
+                            product:
+                                state is GoodsLoaded ? state.products[0] : null,
+                          ),
+                          ProductCardSmall(
+                            product:
+                                state is GoodsLoaded ? state.products[0] : null,
+                          ),
                         ],
                       ),
                     ],
@@ -250,7 +260,7 @@ class _HomeScreenOldState extends State<HomeScreenOld> {
                         ],
                       ),
                       Expanded(
-                        child: Image.asset('images/summer_sale.png'),
+                        child: Image.asset('assets/images/summer_sale.png'),
                       ),
                     ],
                   ),

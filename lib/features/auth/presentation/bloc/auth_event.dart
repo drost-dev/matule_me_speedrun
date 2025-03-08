@@ -10,7 +10,7 @@ final class AuthLoad extends AuthEvent {}
 final class AuthSignIn extends AuthEvent {
   final String email;
   final String password;
-  
+
   AuthSignIn({
     required this.email,
     required this.password,
@@ -24,7 +24,7 @@ final class AuthSignUp extends AuthEvent {
   final String email;
   final String password;
   final String name;
-  
+
   AuthSignUp({
     required this.email,
     required this.password,
@@ -37,10 +37,8 @@ final class AuthSignUp extends AuthEvent {
 
 final class AuthRequestCode extends AuthEvent {
   final String email;
-  
-  AuthRequestCode({
-    required this.email
-  });
+
+  AuthRequestCode({required this.email});
 
   @override
   List<Object?> get props => [email];

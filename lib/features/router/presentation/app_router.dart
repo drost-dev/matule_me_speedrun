@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/features/main/presentation/cart_screen.dart';
 import 'package:matule_me_speedrun/features/main/presentation/category_screen.dart';
+import 'package:matule_me_speedrun/features/main/presentation/details_screen.dart';
 import 'package:matule_me_speedrun/features/main/presentation/favourite_screen.dart';
 import 'package:matule_me_speedrun/features/auth/presentation/forgot_pass_screen.dart';
 import 'package:matule_me_speedrun/features/main/presentation/home_screen.dart';
@@ -12,6 +13,7 @@ import 'package:matule_me_speedrun/features/auth/presentation/sign_in_screen.dar
 import 'package:matule_me_speedrun/features/auth/presentation/sign_up_screen.dart';
 import 'package:matule_me_speedrun/features/onboard/presentation/onboard_screen.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
+import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
@@ -38,6 +40,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: FavouriteRoute.page, path: 'favourite'),
           ],
         ),
+        AutoRoute(page: DetailsRoute.page, path: '/details'),
         AutoRoute(page: PopularRoute.page, path: '/popular'),
         AutoRoute(page: CategoryRoute.page, path: '/category'),
         AutoRoute(page: CartRoute.page, path: '/cart'),

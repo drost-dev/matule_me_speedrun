@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/main/presentation/bloc/goods/goods_bloc.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/cart_product.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
@@ -25,21 +26,21 @@ class _CartScreenState extends State<CartScreen> {
   //     name: 'Nike Club Max',
   //     desc: '',
   //     price: 584.95,
-  //     imageUrl: 'images/cart_product1.png',
+  //     imageUrl: 'assets/images/cart_product1.png',
   //   ),
   //   Product(
   //     id: '2',
   //     name: 'Nike Air Max 200',
   //     desc: '',
   //     price: 94.05,
-  //     imageUrl: 'images/cart_product1.png',
+  //     imageUrl: 'assets/images/cart_product1.png',
   //   ),
   //   Product(
   //     id: '3',
   //     name: 'Nike Air Max 270 Essential',
   //     desc: '',
   //     price: 74.95,
-  //     imageUrl: 'images/cart_product1.png',
+  //     imageUrl: 'assets/images/cart_product1.png',
   //   ),
   // ];
 
@@ -54,7 +55,7 @@ class _CartScreenState extends State<CartScreen> {
             .toList();
       });
     } else {
-      goodsBloc.add(const FetchGoods());
+      goodsBloc.add(const GoodsFetch());
     }
     super.initState();
   }
@@ -76,14 +77,14 @@ class _CartScreenState extends State<CartScreen> {
                 dimension: 44,
                 child: IconButton(
                   onPressed: () {
-                    goodsBloc.add(const FetchGoods());
+                    goodsBloc.add(const GoodsFetch());
                     context.router.maybePop();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: theme.colorScheme.onSurface,
                   ),
                   icon: const ImageIcon(
-                    AssetImage('icons/arrow_left.png'),
+                    AssetImage('assets/icons/arrow_left.png'),
                   ),
                 ),
               ),
@@ -98,7 +99,8 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
+          padding:
+              const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 102),
           child: BlocConsumer(
             bloc: goodsBloc,
             listener: (context, state) {
@@ -115,10 +117,14 @@ class _CartScreenState extends State<CartScreen> {
                 return Column(
                   children: [
                     ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return CartProduct(
                           key: ValueKey(cartProducts[index].id),
                           product: cartProducts[index],
+                          onAmountChanged: (amount) {
+                            goodsBloc.add(UpdateCartAmountGood(cartItem: cartProducts[index].cart!, newAmount: amount));
+                          },
                           onDelete: () {
                             goodsBloc.add(
                                 ToggleCartGood(product: cartProducts[index]));
@@ -137,9 +143,44 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 );
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: theme.colorScheme.blue,
+                  ),
+                );
               }
             },
+          ),
+        ),
+      ),
+      extendBody: false,
+      bottomSheet: SizedBox.fromSize(
+        size: Size.fromHeight(82),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox.fromSize(
+            size: Size.fromHeight(50),
+            // height: 50,
+            // width: 335,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  backgroundColor: theme.colorScheme.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: Text(
+                  "Оформить заказ",
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    height: 22 / 14,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

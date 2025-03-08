@@ -58,7 +58,28 @@ class SupabaseRepo extends DatabaseRepo {
   Future<List<Product>> getAllProducts() async {
     var response = await _client
         .from('product')
+        .select('*, category(*), carts(*)')
+        .eq('carts.user_id', _client.auth.currentUser!.id)
+        .eq('available', true);
+
+    // print(response);
+
+    List<Product> products = [];
+
+    for (int i = 0; i < response.length; i++) {
+      products.add(Product.fromJson(response[i]));
+      products[i].imageUrl = getProductImage(products[i]);
+    }
+
+    return products;
+  }
+
+  @override
+  Future<List<Product>> searchProducts(String query) async {
+    var response = await _client
+        .from('product')
         .select('*, category(*)')
+        .ilike('name', '%$query%')
         .eq('available', true);
 
     List<Product> products = [];
@@ -166,6 +187,11 @@ class SupabaseRepo extends DatabaseRepo {
       product.addedToCart = !product.addedToCart;
     }
     return product;
+  }
+
+  @override
+  Future<void> updateCartAmount(CartItem cartItem, int newAmount) async {
+    await _client.from('carts').update({'amount': newAmount}).eq('id', cartItem.id ?? '');
   }
 
   @override

@@ -15,7 +15,7 @@ class FavouritesButton extends StatelessWidget {
           context.router.push(const FavouriteRoute());
         },
         icon: ImageIcon(
-          const AssetImage('icons/heart3.png'),
+          const AssetImage('assets/icons/heart3.png'),
           size: 24,
           color: theme.colorScheme.onSurfaceVariant,
         ),

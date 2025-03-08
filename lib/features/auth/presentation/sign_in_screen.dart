@@ -28,6 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: theme.colorScheme.onSurface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110),
@@ -45,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   backgroundColor: theme.colorScheme.surface,
                 ),
                 icon: const ImageIcon(
-                  AssetImage('icons/arrow_left.png'),
+                  AssetImage('assets/icons/arrow_left.png'),
                 ),
               ),
             ),

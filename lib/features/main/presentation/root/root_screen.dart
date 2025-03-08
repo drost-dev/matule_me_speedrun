@@ -44,7 +44,7 @@ class _RootScreenState extends State<RootScreen> {
               height: 106,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/bottom_bar.png'),
+                  image: AssetImage('assets/images/bottom_bar.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -68,7 +68,7 @@ class _RootScreenState extends State<RootScreen> {
                             context.router.push(const CartRoute());
                           },
                           icon: ImageIcon(
-                            const AssetImage('icons/cart.png'),
+                            const AssetImage('assets/icons/cart.png'),
                             size: 24,
                             color: theme.colorScheme.onSurface,
                           ),
@@ -102,7 +102,7 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('icons/home.png'),
+                                      const AssetImage('assets/icons/home.png'),
                                       size: 24,
                                       color: selectedIndex == 0
                                           ? theme.colorScheme.blue
@@ -125,7 +125,7 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('icons/heart2.png'),
+                                      const AssetImage('assets/icons/heart2.png'),
                                       size: 24,
                                       color: selectedIndex == 1
                                           ? theme.colorScheme.blue
@@ -159,7 +159,7 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('icons/bell.png'),
+                                      const AssetImage('assets/icons/bell.png'),
                                       size: 24,
                                       color: selectedIndex == 2
                                           ? theme.colorScheme.blue
@@ -182,7 +182,7 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('icons/person.png'),
+                                      const AssetImage('assets/icons/person.png'),
                                       size: 24,
                                       color: selectedIndex == 3
                                           ? theme.colorScheme.blue

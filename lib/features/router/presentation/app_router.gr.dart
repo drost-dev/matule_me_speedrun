@@ -81,6 +81,52 @@ class CategoryRouteArgs {
 }
 
 /// generated route for
+/// [DetailsScreen]
+class DetailsRoute extends PageRouteInfo<DetailsRouteArgs> {
+  DetailsRoute({
+    Key? key,
+    required Product product,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DetailsRoute.name,
+          args: DetailsRouteArgs(
+            key: key,
+            product: product,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DetailsRouteArgs>();
+      return DetailsScreen(
+        key: args.key,
+        product: args.product,
+      );
+    },
+  );
+}
+
+class DetailsRouteArgs {
+  const DetailsRouteArgs({
+    this.key,
+    required this.product,
+  });
+
+  final Key? key;
+
+  final Product product;
+
+  @override
+  String toString() {
+    return 'DetailsRouteArgs{key: $key, product: $product}';
+  }
+}
+
+/// generated route for
 /// [FavouriteScreen]
 class FavouriteRoute extends PageRouteInfo<void> {
   const FavouriteRoute({List<PageRouteInfo>? children})

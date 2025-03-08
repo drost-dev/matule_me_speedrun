@@ -1,0 +1,2 @@
+D:/Visual Studio Code Projects/matule_me_speedrun/android/app/.cxx/Debug/4r5z6o44/x86/CMakeFiles/edit_cache.dir
+D:/Visual Studio Code Projects/matule_me_speedrun/android/app/.cxx/Debug/4r5z6o44/x86/CMakeFiles/rebuild_cache.dir

@@ -20,7 +20,7 @@ class CartButton extends StatelessWidget {
               context.router.push(const CartRoute());
             },
             icon: ImageIcon(
-              const AssetImage('icons/cart.png'),
+              const AssetImage('assets/icons/cart.png'),
               size: 24,
               color: theme.colorScheme.onSurfaceVariant,
             ),
