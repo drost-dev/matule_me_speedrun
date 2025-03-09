@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/cart_button.dart';
@@ -235,8 +236,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
             right: 44,
             top: 133,
             bottom: 440,
-            child: Image.network(
-              widget.product.imageUrl!,
+            child: CachedNetworkImage(
+              imageUrl: widget.product.imageUrl!,
               fit: BoxFit.fitWidth,
             ),
           ),

@@ -20,7 +20,13 @@ final class AuthWaitingCode extends AuthState {
   List<Object?> get props => [email];
 }
 
-final class AuthSuccess extends AuthState {}
+final class AuthSuccess extends AuthState {
+  AuthSuccess({this.user});
+
+  final User? user;
+  @override
+  List<Object?> get props => [user];
+}
 
 final class AuthError extends AuthState {
   final String message;

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:matule_me_speedrun/default.dart';
@@ -70,7 +71,7 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                               color: isFav
                                   ? theme.colorScheme.red
                                   : theme.colorScheme.onSurfaceVariant
-                                      .withOpacity(0.3),
+                                      .withValues(alpha: 0.3),
                               size: 16,
                             ),
                             style: TextButton.styleFrom(
@@ -92,20 +93,12 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                           SizedBox(
                             height:
                                 142 * MediaQuery.of(context).size.width / 812,
-                            child: Image.network(
-                              widget.product!.imageUrl!,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.product!.imageUrl!,
                               fit: BoxFit.contain,
-                              frameBuilder: (context, child, frame,
-                                  wasSynchronouslyLoaded) {
-                                if (wasSynchronouslyLoaded) {
-                                  return child;
-                                } else {
-                                  return AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 300),
-                                    opacity: frame == null ? 0 : 1,
-                                    child: child,
-                                  );
-                                }
+                              fadeInDuration: Duration(milliseconds: 300),
+                              placeholder: (context, url) {
+                                return Opacity(opacity: 0);
                               },
                             ),
                           ),
@@ -207,7 +200,8 @@ class _ProductCardSmallState extends State<ProductCardSmall> {
                                 ? Padding(
                                     padding: const EdgeInsets.all(7),
                                     child: ImageIcon(
-                                      const AssetImage('assets/icons/cart2.png'),
+                                      const AssetImage(
+                                          'assets/icons/cart2.png'),
                                       color: theme.colorScheme.onSurface,
                                     ),
                                   )

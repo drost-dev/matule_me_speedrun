@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       switch (event) {
         case AuthLoad():
           if (sbRepo.isSignedIn()) {
-            emit(AuthSuccess());
+            emit(AuthSuccess(user: sbRepo.currentUser));
           } else {
             emit(AuthLoaded());
           }
@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         case AuthSignIn():
           try {
             await sbRepo.signIn(email: event.email, password: event.password);
-            emit(AuthSuccess());
+            emit(AuthSuccess(user: sbRepo.currentUser));
           } catch (e) {
             switch (e) {
               case AuthException():
@@ -39,7 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           try {
             await sbRepo.signUp(
                 name: event.name, email: event.email, password: event.password);
-            emit(AuthSuccess());
+            emit(AuthSuccess(user: sbRepo.currentUser));
           } catch (e) {
             switch (e) {
               case AuthException():
@@ -67,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         case AuthSignInOtp():
           try {
             await sbRepo.verifyOtp(email: event.email, code: event.code);
-            emit(AuthSuccess());
+            emit(AuthSuccess(user: sbRepo.currentUser));
           } catch (e) {
             switch (e) {
               case AuthException():

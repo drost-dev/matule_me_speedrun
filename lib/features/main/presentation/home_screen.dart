@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             blurRadius: 4,
                                             spreadRadius: 0,
                                             color:
-                                                Colors.black.withOpacity(0.04),
+                                                Colors.black.withValues(alpha: 0.04),
                                           ),
                                         ],
                                       ),

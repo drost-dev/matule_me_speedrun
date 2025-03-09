@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:matule_me_speedrun/features/database/domain/repos/database_repo.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/cart_item.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/category.dart';
@@ -9,8 +8,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseRepo extends DatabaseRepo {
   late final SupabaseClient _client;
+  late RealtimeChannel _ordersChannel;
 
   SupabaseRepo._init(this._client);
+
+  User? get currentUser => _client.auth.currentUser;
 
   static Future<SupabaseRepo> init() async {
     var sb = await Supabase.initialize(
@@ -22,6 +24,36 @@ class SupabaseRepo extends DatabaseRepo {
     var repo = SupabaseRepo._init(sb.client);
 
     return repo;
+  }
+
+  void listenForPayment(String orderId, void Function() onPay) {
+    _ordersChannel = _client.channel('public:orders');
+
+    // _client.from('orders').stream(primaryKey: ['id']).listen((data) {
+    //   if (data[0]['paid']) {
+    //     print('Заказ с ID \"${data[0]['id']}\" оплачен!');
+    //   }
+    // });
+
+    _ordersChannel
+        .onPostgresChanges(
+          event: PostgresChangeEvent.update,
+          schema: 'public',
+          table: 'orders',
+          // filter: PostgresChangeFilter(
+          //   column: 'id',
+          //   value: orderId,
+          //   type: PostgresChangeFilterType.eq,
+          // ),
+          callback: (payload) async {
+            if (payload.newRecord.containsKey('paid') &&
+                payload.newRecord['paid'] == true) {
+              onPay.call();
+              await _ordersChannel.unsubscribe();
+            }
+          },
+        )
+        .subscribe();
   }
 
   @override
@@ -183,6 +215,7 @@ class SupabaseRepo extends DatabaseRepo {
               ).toJson(),
               defaultToNull: true,
             );
+        product.cart?.amount = 1;
       }
       product.addedToCart = !product.addedToCart;
     }
@@ -191,7 +224,9 @@ class SupabaseRepo extends DatabaseRepo {
 
   @override
   Future<void> updateCartAmount(CartItem cartItem, int newAmount) async {
-    await _client.from('carts').update({'amount': newAmount}).eq('id', cartItem.id ?? '');
+    await _client
+        .from('carts')
+        .update({'amount': newAmount}).eq('id', cartItem.id ?? '');
   }
 
   @override

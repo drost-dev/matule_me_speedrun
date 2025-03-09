@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:matule_me_speedrun/default.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
@@ -181,7 +182,9 @@ class _CartProductState extends State<CartProduct> {
                         color: theme.colorScheme.surface,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Image.network(widget.product.imageUrl!),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.product.imageUrl!,
+                      ),
                     ),
                   ),
                   Flexible(

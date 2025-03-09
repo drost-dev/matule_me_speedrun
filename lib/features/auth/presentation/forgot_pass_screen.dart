@@ -62,8 +62,9 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   context: context,
                   builder: (context) {
                     Future.delayed(const Duration(seconds: 3), () {
-                      if (context.mounted)
+                      if (context.mounted) {
                         context.router.replace(const OtpVerificationRoute());
+                      }
                     });
 
                     return Dialog(
@@ -124,7 +125,9 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     );
                   },
                 ).whenComplete(() {
-                  context.router.replace(const OtpVerificationRoute());
+                  if (context.mounted) {
+                    context.router.replace(const OtpVerificationRoute());
+                  }
                 });
                 break;
             }

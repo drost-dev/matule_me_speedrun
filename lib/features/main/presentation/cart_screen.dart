@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:matule_me_speedrun/default.dart';
+import 'package:matule_me_speedrun/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:matule_me_speedrun/features/main/presentation/bloc/goods/goods_bloc.dart';
 import 'package:matule_me_speedrun/features/main/presentation/widgets/cart_product.dart';
 import 'package:matule_me_speedrun/features/products/domain/models/product.dart';
@@ -17,6 +19,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final GoodsBloc goodsBloc = GetIt.I<GoodsBloc>();
+  final AuthBloc authBloc = GetIt.I<AuthBloc>();
 
   List<Product> cartProducts = [];
 
@@ -123,7 +126,9 @@ class _CartScreenState extends State<CartScreen> {
                           key: ValueKey(cartProducts[index].id),
                           product: cartProducts[index],
                           onAmountChanged: (amount) {
-                            goodsBloc.add(UpdateCartAmountGood(cartItem: cartProducts[index].cart!, newAmount: amount));
+                            goodsBloc.add(UpdateCartAmountGood(
+                                cartItem: cartProducts[index].cart!,
+                                newAmount: amount));
                           },
                           onDelete: () {
                             goodsBloc.add(
@@ -165,7 +170,49 @@ class _CartScreenState extends State<CartScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (authBloc.state is AuthSuccess) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(
+                          child: SizedBox.square(
+                            dimension: 250,
+                            // color: theme.colorScheme.onSurface,
+                            child: AlertDialog(
+                              backgroundColor: theme.colorScheme.onSurface,
+                              insetPadding: EdgeInsets.zero,
+                              contentPadding: EdgeInsets.all(20),
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox.square(
+                                    dimension: 160,
+                                    child: BarcodeWidget(
+                                      padding: EdgeInsets.zero,
+                                      data: (authBloc.state as AuthSuccess)
+                                              .user
+                                              ?.id ??
+                                          '',
+                                      barcode: Barcode.qrCode(),
+                                      backgroundColor:
+                                          theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Отсканируйте QR-код для оплаты заказа',
+                                    style: theme.textTheme.titleMedium,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: theme.colorScheme.blue,
                   shape: RoundedRectangleBorder(
