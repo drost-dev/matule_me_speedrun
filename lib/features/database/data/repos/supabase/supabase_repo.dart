@@ -205,14 +205,16 @@ class SupabaseRepo extends DatabaseRepo {
             .eq('user_id', _client.auth.currentUser!.id);
       } else {
         //добавляем
+        var cartItem = CartItem(
+          userId: _client.auth.currentUser!.id,
+          productId: product.id,
+        );
         await _client.from('carts').upsert(
-              CartItem(
-                userId: _client.auth.currentUser!.id,
-                productId: product.id,
-              ).toJson(),
+              cartItem.toJson(),
               defaultToNull: true,
             );
-        product.cart?.amount = 1;
+        product.cart = cartItem;
+        product.cart!.amount = 1;
       }
       product.addedToCart = !product.addedToCart;
     }
@@ -227,9 +229,27 @@ class SupabaseRepo extends DatabaseRepo {
   }
 
   @override
+  Future<void> clearCart() async {
+    await _client
+        .from('carts')
+        .delete()
+        .eq('user_id', _client.auth.currentUser!.id);
+  }
+
+  @override
   Future<String> createOrder(List<Product> products) async {
-    var r = await _client.from('orders').select('*, order_products(*)');
-    return r.toString();
+    print(products.length);
+    var order = await _client.from('orders').insert({}).select('id');
+    await _client
+        .from('order_products')
+        .insert(List.generate(products.length, (index) {
+          return {
+            'order_id': order[0]['id'],
+            'product_id': products[index].id,
+            'amount': products[index].cart?.amount
+          };
+        }));
+    return order[0]['id'];
   }
 
   @override

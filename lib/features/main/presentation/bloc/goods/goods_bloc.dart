@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -81,7 +83,20 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
           await sbRepo.updateCartAmount(event.cartItem, event.newAmount);
           break;
         case CreateOrderGood():
-          await sbRepo.createOrder(event.products);
+          var orderId = await sbRepo.createOrder(event.products);
+
+          emit(GoodsOrderCreated(orderId: orderId));
+
+          final completer = Completer<void>();
+
+          sbRepo.listenForPayment(orderId, () {
+            completer.complete();
+          });
+
+          await completer.future;
+          emit(GoodsOrderConfirmed());
+          await sbRepo.clearCart();
+          super.add(GoodsFetch());
           break;
       }
     });

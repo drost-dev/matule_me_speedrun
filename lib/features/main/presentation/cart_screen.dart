@@ -23,19 +23,24 @@ class _CartScreenState extends State<CartScreen> {
 
   List<Product> cartProducts = [];
 
+  String getPaymentUrl(String orderId) {
+    return "http://192.168.0.179:8000/pay/$orderId";
+  }
+
   @override
   void initState() {
-    if (goodsBloc.state is GoodsLoaded &&
-        (goodsBloc.state as GoodsLoaded).cartLoaded) {
-      setState(() {
-        cartProducts = (goodsBloc.state as GoodsLoaded)
-            .products
-            .where((element) => element.addedToCart)
-            .toList();
-      });
-    } else {
-      goodsBloc.add(const GoodsFetch());
-    }
+    goodsBloc.add(const GoodsFetch());
+    // if (goodsBloc.state is GoodsLoaded &&
+    //     (goodsBloc.state as GoodsLoaded).cartLoaded) {
+    setState(() {
+      cartProducts = (goodsBloc.state as GoodsLoaded)
+          .products
+          .where((element) => element.addedToCart)
+          .toList();
+    });
+    // } else {
+    //   goodsBloc.add(const GoodsFetch());
+    // }
     super.initState();
   }
 
@@ -90,45 +95,101 @@ class _CartScreenState extends State<CartScreen> {
                       .toList();
                 });
               }
+              if (state is GoodsOrderCreated) {
+                if (authBloc.state is AuthSuccess) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return PopScope(
+                        canPop: false,
+                        child: Center(
+                          child: SizedBox.square(
+                            dimension: 250,
+                            // color: theme.colorScheme.onSurface,
+                            child: AlertDialog(
+                              backgroundColor: theme.colorScheme.onSurface,
+                              insetPadding: EdgeInsets.zero,
+                              contentPadding: EdgeInsets.all(20),
+                              content: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox.square(
+                                    dimension: 160,
+                                    child: BarcodeWidget(
+                                      padding: EdgeInsets.zero,
+                                      data: getPaymentUrl(state.orderId),
+                                      barcode: Barcode.qrCode(),
+                                      backgroundColor:
+                                          theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Отсканируйте QR-код для оплаты заказа',
+                                    style: theme.textTheme.titleMedium,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }
+              if (state is GoodsOrderConfirmed) {
+                setState(() {
+                  cartProducts.clear();
+                });
+                context.router.pop();
+              }
             },
             builder: (context, state) {
-              if (state is GoodsLoaded) {
-                return Column(
-                  children: [
-                    ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return CartProduct(
-                          key: ValueKey(cartProducts[index].id),
-                          product: cartProducts[index],
-                          onAmountChanged: (amount) {
-                            goodsBloc.add(UpdateCartAmountGood(
+              switch (state) {
+                case GoodsLoaded():
+                  return Column(
+                    children: [
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return CartProduct(
+                            key: ValueKey(cartProducts[index].id),
+                            product: cartProducts[index],
+                            onAmountChanged: (amount) {
+                              goodsBloc.add(UpdateCartAmountGood(
                                 cartItem: cartProducts[index].cart!,
-                                newAmount: amount));
-                          },
-                          onDelete: () {
-                            goodsBloc.add(
-                                ToggleCartGood(product: cartProducts[index]));
-                            setState(() {
-                              cartProducts.removeAt(index);
-                            });
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 14);
-                      },
-                      itemCount: cartProducts.length,
-                      shrinkWrap: true,
+                                newAmount: amount,
+                              ));
+                            },
+                            onDelete: () {
+                              goodsBloc.add(
+                                  ToggleCartGood(product: cartProducts[index]));
+                              setState(() {
+                                cartProducts.removeAt(index);
+                              });
+                              print(cartProducts[index].cart?.amount);
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 14);
+                        },
+                        itemCount: cartProducts.length,
+                        shrinkWrap: true,
+                      ),
+                    ],
+                  );
+                case GoodsLoading():
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: theme.colorScheme.blue,
                     ),
-                  ],
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: theme.colorScheme.blue,
-                  ),
-                );
+                  );
+                default:
+                  return SizedBox();
               }
             },
           ),
@@ -147,48 +208,8 @@ class _CartScreenState extends State<CartScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextButton(
                 onPressed: () {
-                  goodsBloc.add(CreateOrderGood(products: cartProducts));
-                  if (authBloc.state is AuthSuccess) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Center(
-                          child: SizedBox.square(
-                            dimension: 250,
-                            // color: theme.colorScheme.onSurface,
-                            child: AlertDialog(
-                              backgroundColor: theme.colorScheme.onSurface,
-                              insetPadding: EdgeInsets.zero,
-                              contentPadding: EdgeInsets.all(20),
-                              content: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox.square(
-                                    dimension: 160,
-                                    child: BarcodeWidget(
-                                      padding: EdgeInsets.zero,
-                                      data: (authBloc.state as AuthSuccess)
-                                              .user
-                                              ?.id ??
-                                          '',
-                                      barcode: Barcode.qrCode(),
-                                      backgroundColor:
-                                          theme.colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Отсканируйте QR-код для оплаты заказа',
-                                    style: theme.textTheme.titleMedium,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                  if (cartProducts.isNotEmpty) {
+                    goodsBloc.add(CreateOrderGood(products: cartProducts));
                   }
                 },
                 style: TextButton.styleFrom(

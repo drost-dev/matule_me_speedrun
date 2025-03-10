@@ -38,3 +38,14 @@ final class GoodsLoaded extends GoodsState {
 }
 
 final class GoodsReloaded extends GoodsState {}
+
+final class GoodsOrderCreated extends GoodsState {
+  final String orderId;
+
+  const GoodsOrderCreated({required this.orderId});
+
+  @override
+  List<Object> get props => [orderId];
+}
+
+final class GoodsOrderConfirmed extends GoodsState {}

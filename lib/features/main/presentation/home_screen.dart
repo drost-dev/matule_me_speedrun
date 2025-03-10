@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _searchDebounce(String text) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(Duration(seconds: 1), () {
+    _debounce = Timer(Duration(milliseconds: 500), () {
       goodsBloc.add(GoodsFetch(query: text));
     });
   }
