@@ -48,3 +48,12 @@ class UpdateCartAmountGood extends GoodsEvent {
   @override
   List<Object?> get props => [cartItem];
 }
+
+class CreateOrderGood extends GoodsEvent {
+  const CreateOrderGood({required this.products});
+
+  final List<Product> products;
+
+  @override
+  List<Object?> get props => [products];
+}

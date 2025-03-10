@@ -23,30 +23,6 @@ class _CartScreenState extends State<CartScreen> {
 
   List<Product> cartProducts = [];
 
-  // final products = [
-  //   Product(
-  //     id: '1',
-  //     name: 'Nike Club Max',
-  //     desc: '',
-  //     price: 584.95,
-  //     imageUrl: 'assets/images/cart_product1.png',
-  //   ),
-  //   Product(
-  //     id: '2',
-  //     name: 'Nike Air Max 200',
-  //     desc: '',
-  //     price: 94.05,
-  //     imageUrl: 'assets/images/cart_product1.png',
-  //   ),
-  //   Product(
-  //     id: '3',
-  //     name: 'Nike Air Max 270 Essential',
-  //     desc: '',
-  //     price: 74.95,
-  //     imageUrl: 'assets/images/cart_product1.png',
-  //   ),
-  // ];
-
   @override
   void initState() {
     if (goodsBloc.state is GoodsLoaded &&
@@ -171,6 +147,7 @@ class _CartScreenState extends State<CartScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextButton(
                 onPressed: () {
+                  goodsBloc.add(CreateOrderGood(products: cartProducts));
                   if (authBloc.state is AuthSuccess) {
                     showDialog(
                       context: context,
@@ -184,7 +161,8 @@ class _CartScreenState extends State<CartScreen> {
                               insetPadding: EdgeInsets.zero,
                               contentPadding: EdgeInsets.all(20),
                               content: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox.square(
                                     dimension: 160,

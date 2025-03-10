@@ -29,22 +29,16 @@ class SupabaseRepo extends DatabaseRepo {
   void listenForPayment(String orderId, void Function() onPay) {
     _ordersChannel = _client.channel('public:orders');
 
-    // _client.from('orders').stream(primaryKey: ['id']).listen((data) {
-    //   if (data[0]['paid']) {
-    //     print('Заказ с ID \"${data[0]['id']}\" оплачен!');
-    //   }
-    // });
-
     _ordersChannel
         .onPostgresChanges(
           event: PostgresChangeEvent.update,
           schema: 'public',
           table: 'orders',
-          // filter: PostgresChangeFilter(
-          //   column: 'id',
-          //   value: orderId,
-          //   type: PostgresChangeFilterType.eq,
-          // ),
+          filter: PostgresChangeFilter(
+            column: 'id',
+            value: orderId,
+            type: PostgresChangeFilterType.eq,
+          ),
           callback: (payload) async {
             if (payload.newRecord.containsKey('paid') &&
                 payload.newRecord['paid'] == true) {
@@ -90,8 +84,8 @@ class SupabaseRepo extends DatabaseRepo {
   Future<List<Product>> getAllProducts() async {
     var response = await _client
         .from('product')
-        .select('*, category(*), carts(*)')
-        .eq('carts.user_id', _client.auth.currentUser!.id)
+        .select('*, category(*)')
+        // .eq('carts.user_id', _client.auth.currentUser!.id)
         .eq('available', true);
 
     // print(response);
@@ -188,7 +182,10 @@ class SupabaseRepo extends DatabaseRepo {
             return e.id == cartItem.productId;
           });
 
-          if (index >= 0) products[index].addedToCart = true;
+          if (index >= 0) {
+            products[index].addedToCart = true;
+            products[index].cart = cartItem;
+          }
         }
       }
     }
@@ -227,6 +224,12 @@ class SupabaseRepo extends DatabaseRepo {
     await _client
         .from('carts')
         .update({'amount': newAmount}).eq('id', cartItem.id ?? '');
+  }
+
+  @override
+  Future<String> createOrder(List<Product> products) async {
+    var r = await _client.from('orders').select('*, order_products(*)');
+    return r.toString();
   }
 
   @override

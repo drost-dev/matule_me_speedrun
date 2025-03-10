@@ -228,7 +228,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ),
                                           alignment: Alignment.center,
                                           child: _isAgreed
-                                              ? Image.asset('assets/icons/shield.png')
+                                              ? Image.asset(
+                                                  'assets/icons/shield.png')
                                               : null,
                                         ),
                                       ),

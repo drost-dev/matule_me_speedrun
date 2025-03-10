@@ -125,7 +125,8 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('assets/icons/heart2.png'),
+                                      const AssetImage(
+                                          'assets/icons/heart2.png'),
                                       size: 24,
                                       color: selectedIndex == 1
                                           ? theme.colorScheme.blue
@@ -182,7 +183,8 @@ class _RootScreenState extends State<RootScreen> {
                                       tabsRouter.setActiveIndex(selectedIndex);
                                     },
                                     icon: ImageIcon(
-                                      const AssetImage('assets/icons/person.png'),
+                                      const AssetImage(
+                                          'assets/icons/person.png'),
                                       size: 24,
                                       color: selectedIndex == 3
                                           ? theme.colorScheme.blue

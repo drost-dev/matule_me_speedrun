@@ -16,7 +16,7 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
     on<GoodsEvent>((event, emit) async {
       switch (event) {
         case GoodsFetch():
-          emit(GoodsLoading());
+          if (event.query == null) emit(GoodsLoading());
 
           List<Product> products;
 
@@ -79,6 +79,10 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
           break;
         case UpdateCartAmountGood():
           await sbRepo.updateCartAmount(event.cartItem, event.newAmount);
+          break;
+        case CreateOrderGood():
+          await sbRepo.createOrder(event.products);
+          break;
       }
     });
   }

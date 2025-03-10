@@ -17,5 +17,6 @@ abstract class DatabaseRepo {
   Future<List<Product>> checkCart(List<Product> products);
   Future<Product> toggleCart(Product product);
   Future<void> updateCartAmount(CartItem cartItem, int newAmount);
+  Future<String> createOrder(List<Product> products);
   Future<List<Category>> getAllCategories();
 }

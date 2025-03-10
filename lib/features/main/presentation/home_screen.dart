@@ -122,8 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             offset: const Offset(0, 4),
                                             blurRadius: 4,
                                             spreadRadius: 0,
-                                            color:
-                                                Colors.black.withValues(alpha: 0.04),
+                                            color: Colors.black
+                                                .withValues(alpha: 0.04),
                                           ),
                                         ],
                                       ),
@@ -176,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: IconButton(
                                       onPressed: () {},
                                       icon: ImageIcon(
-                                        const AssetImage('assets/icons/filters.png'),
+                                        const AssetImage(
+                                            'assets/icons/filters.png'),
                                         size: 24,
                                         color: theme.colorScheme.onSurface,
                                       ),
